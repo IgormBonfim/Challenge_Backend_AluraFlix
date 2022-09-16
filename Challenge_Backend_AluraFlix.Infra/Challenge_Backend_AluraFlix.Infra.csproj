@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.Dominio\Challenge_Backend_AluraFlix.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
+
 </Project>

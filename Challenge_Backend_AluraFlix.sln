@@ -3,23 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entidades", "Entidades\Entidades.csproj", "{DA461E58-501D-43BC-9334-CCC1EAC14FB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backend_AluraFlix.API", "Challenge_Backend_AluraFlix.API\Challenge_Backend_AluraFlix.API.csproj", "{691BE9D2-9E63-462D-A67A-103E393F919F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Dominio\Dominio.csproj", "{E8847F3C-4566-4062-BF3C-E4CC28144435}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backed_AluraFlix.Aplicacao", "Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backed_AluraFlix.Aplicacao.csproj", "{98002C2C-116F-4DC4-8546-22B919CE3BE5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - WebAPIs", "1 - WebAPIs", "{C6832EA7-5EE3-4081-B4EB-0F921B1A8FD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backend_AluraFlix.DataTransfer", "Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj", "{3710CC59-E615-4F5E-861E-1F0D0F03D7F7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Dominio", "3 - Dominio", "{03C85515-E441-4EA6-98A8-2B6D39273B03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backend_AluraFlix.Dominio", "Challenge_Backend_AluraFlix.Dominio\Challenge_Backend_AluraFlix.Dominio.csproj", "{08E49150-61C6-4AE2-858F-D1663D1F7659}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infraestrutura", "4 - Infraestrutura", "{1FDBD8C9-16E6-4FF3-A4A9-88218C19D11C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Entidades", "5 - Entidades", "{4F7D012C-12B0-4A4F-82E6-90ECE8FA89D6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Aplicacao", "2 - Aplicacao", "{D6D7B08C-D61D-4855-98E5-C6CD221AF024}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestrutura", "Infraestrutura\Infraestrutura.csproj", "{AD671AED-AB87-491E-8449-2BE0B044753F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplicacao", "Aplicacao\Aplicacao.csproj", "{5C75B411-54E0-4F7A-88C1-08E70CF8A820}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backend_AluraFlix.Infra", "Challenge_Backend_AluraFlix.Infra\Challenge_Backend_AluraFlix.Infra.csproj", "{71D3B552-1FC1-480B-BEDB-3BC2DB52F2F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,31 +19,29 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DA461E58-501D-43BC-9334-CCC1EAC14FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA461E58-501D-43BC-9334-CCC1EAC14FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA461E58-501D-43BC-9334-CCC1EAC14FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA461E58-501D-43BC-9334-CCC1EAC14FB1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8847F3C-4566-4062-BF3C-E4CC28144435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8847F3C-4566-4062-BF3C-E4CC28144435}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8847F3C-4566-4062-BF3C-E4CC28144435}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8847F3C-4566-4062-BF3C-E4CC28144435}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD671AED-AB87-491E-8449-2BE0B044753F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD671AED-AB87-491E-8449-2BE0B044753F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD671AED-AB87-491E-8449-2BE0B044753F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD671AED-AB87-491E-8449-2BE0B044753F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C75B411-54E0-4F7A-88C1-08E70CF8A820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C75B411-54E0-4F7A-88C1-08E70CF8A820}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C75B411-54E0-4F7A-88C1-08E70CF8A820}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C75B411-54E0-4F7A-88C1-08E70CF8A820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{691BE9D2-9E63-462D-A67A-103E393F919F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691BE9D2-9E63-462D-A67A-103E393F919F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691BE9D2-9E63-462D-A67A-103E393F919F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691BE9D2-9E63-462D-A67A-103E393F919F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98002C2C-116F-4DC4-8546-22B919CE3BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98002C2C-116F-4DC4-8546-22B919CE3BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98002C2C-116F-4DC4-8546-22B919CE3BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98002C2C-116F-4DC4-8546-22B919CE3BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3710CC59-E615-4F5E-861E-1F0D0F03D7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3710CC59-E615-4F5E-861E-1F0D0F03D7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3710CC59-E615-4F5E-861E-1F0D0F03D7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3710CC59-E615-4F5E-861E-1F0D0F03D7F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08E49150-61C6-4AE2-858F-D1663D1F7659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08E49150-61C6-4AE2-858F-D1663D1F7659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08E49150-61C6-4AE2-858F-D1663D1F7659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08E49150-61C6-4AE2-858F-D1663D1F7659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D3B552-1FC1-480B-BEDB-3BC2DB52F2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D3B552-1FC1-480B-BEDB-3BC2DB52F2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D3B552-1FC1-480B-BEDB-3BC2DB52F2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D3B552-1FC1-480B-BEDB-3BC2DB52F2F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{DA461E58-501D-43BC-9334-CCC1EAC14FB1} = {4F7D012C-12B0-4A4F-82E6-90ECE8FA89D6}
-		{E8847F3C-4566-4062-BF3C-E4CC28144435} = {03C85515-E441-4EA6-98A8-2B6D39273B03}
-		{AD671AED-AB87-491E-8449-2BE0B044753F} = {1FDBD8C9-16E6-4FF3-A4A9-88218C19D11C}
-		{5C75B411-54E0-4F7A-88C1-08E70CF8A820} = {D6D7B08C-D61D-4855-98E5-C6CD221AF024}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B51BF8E8-7FEA-434F-9759-1EA931E3DE5F}

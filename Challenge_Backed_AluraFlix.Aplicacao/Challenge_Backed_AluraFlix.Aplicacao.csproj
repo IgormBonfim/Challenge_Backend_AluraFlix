@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj" />
+    <ProjectReference Include="..\Challenge_Backend_AluraFlix.Dominio\Challenge_Backend_AluraFlix.Dominio.csproj" />
+    <ProjectReference Include="..\Challenge_Backend_AluraFlix.Infra\Challenge_Backend_AluraFlix.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
