@@ -1,4 +1,5 @@
 ﻿using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Microsoft.AspNetCore.Http;
@@ -31,10 +32,25 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
             return Ok(retorno);
         }
 
-        [HttpGet("{idVideo}")]
-        public ActionResult<VideoResponse> RecuperarPorId(int idVideo)
+        [HttpGet("{id}")]
+        public ActionResult<VideoResponse> RecuperarPorId(int id)
         {
-            var retorno = videosAppServico.Recuperar(idVideo);
+            var retorno = videosAppServico.Recuperar(id);
+            return Ok(retorno);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Editar(int id, [FromBody] VideoEditarRequest editarRequest)
+        {
+            editarRequest.idVideo = id;
+            var retorno = videosAppServico.Editar(editarRequest);
+            return Ok(retorno);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<MensagemResponse> Deletar(int id)
+        {
+            var retorno = videosAppServico.Deletar(id);
             return Ok(retorno);
         }
     }

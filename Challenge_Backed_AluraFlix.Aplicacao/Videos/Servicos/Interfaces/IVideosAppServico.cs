@@ -1,4 +1,5 @@
-﻿using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
+﻿using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces
     {
         VideoIdResponse Inserir(VideoInserirRequest inserirRequest);
         IList<VideoResponse> ListarTodos();
-        VideoResponse Recuperar(int idVideo);
+        Object Recuperar(int idVideo);
+        VideoResponse Editar(VideoEditarRequest editarRequest);
+        MensagemResponse Deletar(int idVideo);
     }
 }

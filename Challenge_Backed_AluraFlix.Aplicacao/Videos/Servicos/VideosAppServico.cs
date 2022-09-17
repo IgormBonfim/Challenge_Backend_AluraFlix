@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
@@ -26,6 +27,50 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             this.mapper = mapper;
         }
 
+        public MensagemResponse Deletar(int idVideo)
+        {
+            ITransaction transacao = session.BeginTransaction();
+
+            MensagemResponse retorno = new MensagemResponse();
+
+            try
+            {
+                videosServico.Deletar(idVideo);
+                if (transacao.IsActive)
+                    transacao.Commit();
+                retorno.Mensagem = "Video deletado com sucesso!";
+                return retorno;
+            }
+            catch (Exception e)
+            {
+                retorno.Mensagem = e.Message;
+                return retorno;
+            }
+        }
+
+        public VideoResponse Editar(VideoEditarRequest editarRequest)
+        {
+            editarRequest = editarRequest ?? new VideoEditarRequest();
+            Video videoEditar = mapper.Map<Video>(editarRequest);
+
+            ITransaction transacao = session.BeginTransaction();
+
+            try
+            {
+                videosServico.Editar(videoEditar);
+                if (transacao.IsActive)
+                    transacao.Commit();
+                return mapper.Map<VideoResponse>(videoEditar);
+            }
+            catch (Exception e)
+            {
+                if (transacao.IsActive)
+                    transacao.Rollback();
+                throw e;
+            }
+
+        }
+
         public VideoIdResponse Inserir(VideoInserirRequest inserirRequest)
         {
             Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo);
@@ -50,27 +95,39 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
 
         public IList<VideoResponse> ListarTodos()
         {
-            IList<Video> videosDb = videosServico.Videos();
-            IList<VideoResponse> videosRetorno = new List<VideoResponse>();
-
-            foreach (var video in videosDb)
+            try
             {
-                var videoResponse = new VideoResponse
+                IList<Video> videosDb = videosServico.Videos();
+                IList<VideoResponse> videosRetorno = new List<VideoResponse>();
+
+                foreach (var video in videosDb)
                 {
-                    IdVideo = video.IdVideo,
-                    TituloVideo = video.TituloVideo,
-                    DescVideo = video.DescVideo,
-                    UrlVideo = video.UrlVideo
-                };
-                videosRetorno.Add(videoResponse);
+                    var videoResponse = mapper.Map<VideoResponse>(video);
+                    videosRetorno.Add(videoResponse);
+                }
+                return videosRetorno;
             }
-            return videosRetorno;
+            catch
+            {
+
+                return null;
+            }
+            
         }
 
-        public VideoResponse Recuperar(int idVideo)
+        public Object Recuperar(int idVideo)
         {
-            Video video = videosServico.Validar(idVideo);
-            return mapper.Map<VideoResponse>(video);
+            try
+            {
+                Video video = videosServico.Validar(idVideo);
+                return mapper.Map<VideoResponse>(video);
+            }
+            catch (Exception e)
+            {
+                MensagemResponse mensagem = new MensagemResponse();
+                mensagem.Mensagem = e.Message;
+                return mensagem;
+            }
         }
     }
 }

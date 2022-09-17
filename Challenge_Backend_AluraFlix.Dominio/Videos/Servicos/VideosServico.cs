@@ -29,7 +29,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
 
             if (videoEditar.TituloVideo != video.TituloVideo && video.TituloVideo != null) videoEditar.SetTituloVideo(video.TituloVideo);
             if (videoEditar.DescVideo != video.DescVideo && video.DescVideo != null) videoEditar.SetDescVideo(video.DescVideo);
-            if (videoEditar.UrlVideo != video.UrlVideo && video.UrlVideo != null) videoEditar.SetDescVideo(video.UrlVideo);
+            if (videoEditar.UrlVideo != video.UrlVideo && video.UrlVideo != null) videoEditar.SetUrlVideo(video.UrlVideo);
 
             return videosRepositorio.Editar(videoEditar);
         }
