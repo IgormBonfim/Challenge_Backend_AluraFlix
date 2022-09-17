@@ -25,6 +25,8 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades
         
         public virtual void SetIdCategoria(int id)
         {
+            if (id < 0)
+                throw new Exception("O Campo id não pode ser inferior a 0");
             IdCategoria = id;
         }
 
