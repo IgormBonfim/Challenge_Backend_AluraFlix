@@ -12,7 +12,7 @@ namespace Challenge_Backend_AluraFlix.Infra.Videos.Mapeamentos
     {
         public VideosMap()
         {
-            Table("VIDEOS");
+            Table("VIDEO");
             Id(x => x.IdVideo).Column("idVideo");
             Map(x => x.TituloVideo).Column("tituloVideo");
             Map(x => x.DescVideo).Column("descVideo");
