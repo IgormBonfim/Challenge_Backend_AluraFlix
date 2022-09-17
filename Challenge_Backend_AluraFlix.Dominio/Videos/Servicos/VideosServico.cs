@@ -52,5 +52,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
                 throw new Exception("Vídeo não encontrado");
             return videoValidar;
         }
+
+        public IList<Video> Videos()
+        {
+            IList<Video> videosList = videosRepositorio.Query().ToList();
+            return videosList;
+        }
     }
 }
