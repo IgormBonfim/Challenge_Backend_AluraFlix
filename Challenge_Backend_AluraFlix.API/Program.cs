@@ -1,3 +1,4 @@
+using Challenge_Backed_AluraFlix.Aplicacao.Videos.Profiles;
 using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos;
 using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
@@ -29,6 +30,7 @@ builder.Services.AddSingleton<ISessionFactory>(factory =>
                         .BuildSessionFactory();
 });
 
+builder.Services.AddAutoMapper(typeof(VideosProfile));
 builder.Services.AddSingleton<IVideosRepositorio, VideosRepositorio>();
 builder.Services.AddSingleton<IVideosServico, VideosServico>();
 builder.Services.AddSingleton<IVideosAppServico, VideosAppServico>();
