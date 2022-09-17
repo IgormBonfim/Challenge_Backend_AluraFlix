@@ -10,7 +10,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
     {
         public int IdVideo { get; protected set; }
         public string TituloVideo { get; protected set; }
-        public string DescVideo { get; protected set; }
+        public string? DescVideo { get; protected set; }
         public string UrlVideo { get; protected set; }
 
         public Video()
@@ -32,7 +32,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
             IdVideo = id;
         }
 
-        public void SetTituloVideo(string titulo)
+        public void SetTituloVideo(string? titulo)
         {
             if (string.IsNullOrWhiteSpace(titulo))
             {
@@ -41,16 +41,16 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
             TituloVideo = titulo;
         }
 
-        public void SetDescVideo(string desc)
+        public void SetDescVideo(string? desc)
         {
-            if (string.IsNullOrWhiteSpace(desc))
+            if (desc != null && desc.Length < 5)
             {
-                throw new Exception("Descrição não pode ser vazia!");
+                throw new Exception("Descrição não deve ser inferior à 5 caracteres!");
             }
             DescVideo = desc;
         }
 
-        public void SetUrlVideo(string url)
+        public void SetUrlVideo(string? url)
         {
             if (string.IsNullOrWhiteSpace(url))
             {
