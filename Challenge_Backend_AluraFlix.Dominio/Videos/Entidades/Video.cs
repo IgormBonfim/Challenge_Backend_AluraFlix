@@ -45,7 +45,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
         {
             if (string.IsNullOrWhiteSpace(desc))
             {
-                throw new Exception("Descrição não pode ser vazia");
+                throw new Exception("Descrição não pode ser vazia!");
             }
             DescVideo = desc;
         }
@@ -54,7 +54,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                throw new Exception("URL não pode ser vazio");
+                throw new Exception("URL não pode ser vazio!");
             }
             UrlVideo = url;
         }

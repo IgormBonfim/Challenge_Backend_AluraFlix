@@ -1,4 +1,5 @@
 ﻿using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,34 +11,46 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
 {
     public class VideosServico : IVideosServico
     {
-        public void Deletar(Video video)
+        private readonly IVideosRepositorio videosRepositorio;
+
+        public VideosServico(IVideosRepositorio videosRepositorio)
         {
-            throw new NotImplementedException();
+            this.videosRepositorio = videosRepositorio;
+        }
+
+        public void Deletar(int videoId)
+        {
+            videosRepositorio.Deletar(Validar(videoId));
         }
 
         public Video Editar(Video video)
         {
-            throw new NotImplementedException();
+            Video videoEditar = Validar(video.IdVideo);
+
+            if (videoEditar.TituloVideo != video.TituloVideo && video.TituloVideo != null) videoEditar.SetTituloVideo(video.TituloVideo);
+            if (videoEditar.DescVideo != video.DescVideo && video.DescVideo != null) videoEditar.SetDescVideo(video.DescVideo);
+            if (videoEditar.UrlVideo != video.UrlVideo && video.UrlVideo != null) videoEditar.SetDescVideo(video.UrlVideo);
+
+            return videosRepositorio.Editar(videoEditar);
         }
 
         public Video Inserir(Video video)
         {
-            throw new NotImplementedException();
+            return videosRepositorio.Inserir(video);
         }
 
-        public Video Instanciar(string titulo, string desc, string url)
+        public Video Instanciar(string? titulo, string? desc, string? url)
         {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Video> Query()
-        {
-            throw new NotImplementedException();
+            Video video = new Video(titulo, desc, url);
+            return video;
         }
 
         public Video Validar(int id)
         {
-            throw new NotImplementedException();
+            Video videoValidar = videosRepositorio.Recuperar(id);
+            if (videoValidar == null)
+                throw new Exception("Vídeo não encontrado");
+            return videoValidar;
         }
     }
 }
