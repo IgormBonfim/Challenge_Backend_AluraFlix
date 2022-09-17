@@ -1,4 +1,5 @@
-﻿using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+﻿using AutoMapper;
+using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
@@ -16,11 +17,13 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
     {
         private readonly IVideosServico videosServico;
         private readonly ISession session;
+        private readonly IMapper mapper;
 
-        public VideosAppServico(IVideosServico videosServico, ISession session)
+        public VideosAppServico(IVideosServico videosServico, ISession session, IMapper mapper)
         {
             this.videosServico = videosServico;
             this.session = session;
+            this.mapper = mapper;
         }
 
         public VideoIdResponse Inserir(VideoInserirRequest inserirRequest)
@@ -34,8 +37,8 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
                 videoInserir = videosServico.Inserir(videoInserir);
                 if (transacao.IsActive)
                     transacao.Commit();
-                var videoResponse = new VideoIdResponse() { VideoId = videoInserir.IdVideo };
-                return videoResponse;
+                return mapper.Map<VideoIdResponse>(videoInserir);
+
             }
             catch
             {
@@ -43,9 +46,31 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
                     transacao.Rollback();
                 return null;
             }
+        }
 
-            
+        public IList<VideoResponse> ListarTodos()
+        {
+            IList<Video> videosDb = videosServico.Videos();
+            IList<VideoResponse> videosRetorno = new List<VideoResponse>();
 
+            foreach (var video in videosDb)
+            {
+                var videoResponse = new VideoResponse
+                {
+                    IdVideo = video.IdVideo,
+                    TituloVideo = video.TituloVideo,
+                    DescVideo = video.DescVideo,
+                    UrlVideo = video.UrlVideo
+                };
+                videosRetorno.Add(videoResponse);
+            }
+            return videosRetorno;
+        }
+
+        public VideoResponse Recuperar(int idVideo)
+        {
+            Video video = videosServico.Validar(idVideo);
+            return mapper.Map<VideoResponse>(video);
         }
     }
 }

@@ -23,5 +23,19 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
             var retorno = videosAppServico.Inserir(inserirRequest);
             return Ok(retorno);
         }
+
+        [HttpGet]
+        public ActionResult<VideoResponse> Listar()
+        {
+            var retorno = videosAppServico.ListarTodos();
+            return Ok(retorno);
+        }
+
+        [HttpGet("{idVideo}")]
+        public ActionResult<VideoResponse> RecuperarPorId(int idVideo)
+        {
+            var retorno = videosAppServico.Recuperar(idVideo);
+            return Ok(retorno);
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces
     public interface IVideosAppServico
     {
         VideoIdResponse Inserir(VideoInserirRequest inserirRequest);
+        IList<VideoResponse> ListarTodos();
+        VideoResponse Recuperar(int idVideo);
     }
 }
