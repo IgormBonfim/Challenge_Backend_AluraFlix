@@ -4,6 +4,7 @@ using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Infra.Categorias.Mapeamentos;
 using Challenge_Backend_AluraFlix.Infra.Videos;
 using Challenge_Backend_AluraFlix.Infra.Videos.Mapeamentos;
 using FluentNHibernate.Cfg;
@@ -26,7 +27,11 @@ builder.Services.AddSingleton<ISessionFactory>(factory =>
                         .Database(MySQLConfiguration.Standard
                             .ConnectionString(connectionString)
                             .ShowSql())
-                        .Mappings(x => x.FluentMappings.AddFromAssemblyOf<VideosMap>())
+                        .Mappings(x =>
+                        {
+                            x.FluentMappings.AddFromAssemblyOf<VideosMap>();
+                            x.FluentMappings.AddFromAssemblyOf<CategoriasMap>();
+                        })
                         .BuildSessionFactory();
 });
 
