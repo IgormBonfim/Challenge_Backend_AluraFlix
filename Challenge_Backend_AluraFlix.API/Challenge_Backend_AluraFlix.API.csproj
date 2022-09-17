@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -21,6 +21,10 @@
     <ProjectReference Include="..\Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backed_AluraFlix.Aplicacao.csproj" />
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj" />
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.Dominio\Challenge_Backend_AluraFlix.Dominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
