@@ -41,8 +41,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
 
         public Video Instanciar(string? titulo, string? desc, string? url)
         {
-            Video video = new Video(titulo, desc, url);
-            return video;
+            return new Video(titulo, desc, url)
         }
 
         public Video Validar(int id)

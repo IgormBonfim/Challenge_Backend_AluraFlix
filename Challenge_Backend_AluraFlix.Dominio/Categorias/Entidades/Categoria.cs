@@ -17,7 +17,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades
               
         }
 
-        public Categoria(string? titulo, string cor)
+        public Categoria(string? titulo, string? cor)
         {
             SetTituloCategoria(titulo);
             SetCorCategoria(cor);
