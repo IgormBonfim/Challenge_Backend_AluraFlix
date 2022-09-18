@@ -31,14 +31,9 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
         {
             try
             {
-                IList<Video> videosDb = videosServico.Buscar(busca);
-                IList<VideoResponse> videosRetorno = new List<VideoResponse>();
+                IList<Video> videosDb = videosServico.Buscar(busca);;
 
-                foreach (var video in videosDb)
-                {
-                    VideoResponse videoMap = mapper.Map<VideoResponse>(video);
-                    videosRetorno.Add(videoMap);
-                }
+                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
 
                 return videosRetorno;
             }
@@ -46,7 +41,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             {
                 return null;
             }
-            
+
 
         }
 
@@ -121,20 +116,16 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             try
             {
                 IList<Video> videosDb = videosServico.Videos();
-                IList<VideoResponse> videosRetorno = new List<VideoResponse>();
 
-                foreach (var video in videosDb)
-                {
-                    var videoResponse = mapper.Map<VideoResponse>(video);
-                    videosRetorno.Add(videoResponse);
-                }
+                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
+
                 return videosRetorno;
             }
             catch
             {
                 return null;
             }
-            
+
         }
 
         public Object Recuperar(int idVideo)
