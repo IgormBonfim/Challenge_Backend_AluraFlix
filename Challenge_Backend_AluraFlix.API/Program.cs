@@ -32,6 +32,7 @@ builder.Services.AddSingleton<ISessionFactory>(factory =>
     return Fluently.Configure()
                         .Database(MySQLConfiguration.Standard
                             .ConnectionString(connectionString)
+                            .FormatSql()
                             .ShowSql())
                         .Mappings(x =>
                         {
