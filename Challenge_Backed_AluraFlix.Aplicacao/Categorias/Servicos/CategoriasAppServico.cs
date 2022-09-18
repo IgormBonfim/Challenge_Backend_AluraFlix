@@ -27,6 +27,28 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
             this.mapper = mapper;
         }
 
+        public CategoriaIdResponse Editar(CategoriaEditarRequest editarRequest)
+        {
+            editarRequest = editarRequest ?? new CategoriaEditarRequest();
+            Categoria editarCategoria = mapper.Map<Categoria>(editarRequest);
+
+            ITransaction transacao = session.BeginTransaction();
+
+            try
+            {
+                categoriasServico.Editar(editarCategoria);
+                if (transacao.IsActive)
+                    transacao.Commit();
+                return mapper.Map<CategoriaIdResponse>(editarCategoria);
+            }
+            catch (Exception e)
+            {
+                if (transacao.IsActive)
+                    transacao.Rollback();
+                throw e;
+            }
+        }
+
         public CategoriaIdResponse Inserir(CategoriaInserirRequest inserirRequest)
         {
             Categoria inserirCategoria = categoriasServico.Instanciar(inserirRequest.TituloCategoria, inserirRequest.CorCategoria);

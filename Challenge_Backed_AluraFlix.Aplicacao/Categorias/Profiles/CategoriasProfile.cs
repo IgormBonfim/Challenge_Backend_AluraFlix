@@ -15,6 +15,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Profiles
         public CategoriasProfile()
         {
             CreateMap<CategoriaInserirRequest, Categoria>();
+            CreateMap<CategoriaEditarRequest, Categoria>();
             CreateMap<Categoria, CategoriaIdResponse>();
             CreateMap<Categoria, CategoriaResponse>();
         }

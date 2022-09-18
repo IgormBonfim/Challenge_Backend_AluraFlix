@@ -12,5 +12,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces
     {
         CategoriaIdResponse Inserir(CategoriaInserirRequest inserirRequest);
         Object Recuperar(int idCategoria);
+        CategoriaIdResponse Editar(CategoriaEditarRequest editarRequest);
     }
 }

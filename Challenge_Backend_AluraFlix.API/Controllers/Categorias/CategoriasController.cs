@@ -30,5 +30,13 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
             var retorno = categoriasAppServico.Recuperar(id);
             return Ok(retorno);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<CategoriaIdResponse> Editar(int id, [FromBody] CategoriaEditarRequest editarRequest)
+        {
+            editarRequest.IdCategoria = id;
+            var retorno = categoriasAppServico.Editar(editarRequest);
+            return Ok(retorno);
+        }
     }
 }
