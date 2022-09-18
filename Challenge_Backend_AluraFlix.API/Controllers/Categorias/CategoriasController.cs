@@ -1,6 +1,7 @@
 ﻿using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,13 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
         {
             editarRequest.IdCategoria = id;
             var retorno = categoriasAppServico.Editar(editarRequest);
+            return Ok(retorno);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<MensagemResponse> Deletar(int id)
+        {
+            var retorno = categoriasAppServico.Deletar(id);
             return Ok(retorno);
         }
     }

@@ -27,6 +27,27 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
             this.mapper = mapper;
         }
 
+        public MensagemResponse Deletar(int idCategoria)
+        {
+            ITransaction transacao = session.BeginTransaction();
+
+            MensagemResponse retorno = new MensagemResponse();
+
+            try
+            {
+                categoriasServico.Deletar(idCategoria);
+                if (transacao.IsActive)
+                    transacao.Commit();
+                retorno.Mensagem = "Categoria deletada com sucesso!";
+                return retorno;
+            }
+            catch (Exception e)
+            {
+                retorno.Mensagem = e.Message;
+                return retorno;
+            }
+        }
+
         public CategoriaIdResponse Editar(CategoriaEditarRequest editarRequest)
         {
             editarRequest = editarRequest ?? new CategoriaEditarRequest();
