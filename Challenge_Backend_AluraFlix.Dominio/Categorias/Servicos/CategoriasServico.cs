@@ -25,12 +25,17 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos
 
         public Categoria Editar(Categoria editar)
         {
-            throw new NotImplementedException();
+            Categoria categoria = Validar(editar.IdCategoria);
+
+            if (editar.TituloCategoria != null && editar.TituloCategoria != categoria.TituloCategoria) categoria.SetTituloCategoria(editar.TituloCategoria);
+            if (editar.CorCategoria != null && editar.CorCategoria != categoria.CorCategoria) categoria.SetCorCategoria(editar.CorCategoria);
+
+            return categoriasRepositorio.Editar(categoria);
         }
 
         public Categoria Inserir(Categoria inserir)
         {
-            throw new NotImplementedException();
+            return categoriasRepositorio.Inserir(inserir);
         }
 
         public Categoria Instanciar(string? titulo, string? cor)
