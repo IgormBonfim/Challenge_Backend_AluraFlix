@@ -109,7 +109,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             }
             catch
             {
-
                 return null;
             }
             

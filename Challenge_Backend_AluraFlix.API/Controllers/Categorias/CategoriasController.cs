@@ -18,6 +18,13 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
             this.categoriasAppServico = categoriasAppServico;
         }
 
+        [HttpGet]
+        public ActionResult<IList<CategoriaResponse>> Listar()
+        {
+            var retorno = categoriasAppServico.ListarTodos();
+            return Ok(retorno);
+        }
+
         [HttpPost]
         public ActionResult<CategoriaIdResponse> Inserir([FromBody] CategoriaInserirRequest inserirRequest)
         {
