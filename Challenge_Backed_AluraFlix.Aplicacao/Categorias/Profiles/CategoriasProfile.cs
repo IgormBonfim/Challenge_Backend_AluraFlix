@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
+using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Profiles
         public CategoriasProfile()
         {
             CreateMap<CategoriaInserirRequest, Categoria>();
+            CreateMap<Categoria, CategoriaIdResponse>();
+            CreateMap<Categoria, CategoriaResponse>();
         }
     }
 }
