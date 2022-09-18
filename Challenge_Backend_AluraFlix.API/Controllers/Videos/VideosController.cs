@@ -32,6 +32,13 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
             return Ok(retorno);
         }
 
+        [HttpGet("search")]
+        public ActionResult<VideoResponse> BuscarPorTitulo([FromQuery] string titulo)
+        {
+            var retorno = videosAppServico.Buscar(titulo);
+            return Ok(retorno);
+        }
+
         [HttpGet("{id}")]
         public ActionResult<VideoResponse> RecuperarPorId(int id)
         {

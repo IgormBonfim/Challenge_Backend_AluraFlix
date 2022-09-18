@@ -18,6 +18,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             this.videosRepositorio = videosRepositorio;
         }
 
+        public IList<Video> Buscar(string busca)
+        {
+            return videosRepositorio.Query().Where(x => x.TituloVideo.Contains(busca)).ToList();
+        }
+
         public void Deletar(int videoId)
         {
             videosRepositorio.Deletar(Validar(videoId));

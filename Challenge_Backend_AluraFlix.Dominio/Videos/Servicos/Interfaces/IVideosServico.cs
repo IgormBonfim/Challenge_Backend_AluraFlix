@@ -15,5 +15,6 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces
         Video Editar(Video video);
         void Deletar(int idVideo);
         IList<Video> Videos();
+        IList<Video> Buscar(string busca);
     }
 }

@@ -16,5 +16,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces
         Object Recuperar(int idVideo);
         VideoResponse Editar(VideoEditarRequest editarRequest);
         MensagemResponse Deletar(int idVideo);
+        IList<VideoResponse> Buscar(string busca);
     }
 }

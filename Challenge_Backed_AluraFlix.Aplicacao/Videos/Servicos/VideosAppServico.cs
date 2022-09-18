@@ -27,6 +27,29 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             this.mapper = mapper;
         }
 
+        public IList<VideoResponse> Buscar(string busca)
+        {
+            try
+            {
+                IList<Video> videosDb = videosServico.Buscar(busca);
+                IList<VideoResponse> videosRetorno = new List<VideoResponse>();
+
+                foreach (var video in videosDb)
+                {
+                    VideoResponse videoMap = mapper.Map<VideoResponse>(video);
+                    videosRetorno.Add(videoMap);
+                }
+
+                return videosRetorno;
+            }
+            catch
+            {
+                return null;
+            }
+            
+
+        }
+
         public MensagemResponse Deletar(int idVideo)
         {
             ITransaction transacao = session.BeginTransaction();
