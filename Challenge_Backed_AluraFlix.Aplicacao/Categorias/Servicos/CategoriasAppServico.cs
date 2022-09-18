@@ -96,13 +96,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
             try
             {
                 IList<Categoria> categoriasDb = categoriasServico.Listar();
-                IList<CategoriaResponse> categorias = new List<CategoriaResponse>();
-
-                foreach (var categoria in categoriasDb)
-                {
-                    var categoriaResponse = mapper.Map<CategoriaResponse>(categoria);
-                    categorias.Add(categoriaResponse);
-                }
+                IList<CategoriaResponse> categorias = mapper.Map<IList<CategoriaResponse>>(categoriasDb);
                 return categorias;
             }
             catch
