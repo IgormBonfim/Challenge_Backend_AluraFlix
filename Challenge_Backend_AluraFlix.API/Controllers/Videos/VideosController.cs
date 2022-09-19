@@ -49,7 +49,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
         [HttpPut("{id}")]
         public ActionResult Editar(int id, [FromBody] VideoEditarRequest editarRequest)
         {
-            editarRequest.idVideo = id;
+            editarRequest.IdVideo = id;
             var retorno = videosAppServico.Editar(editarRequest);
             return Ok(retorno);
         }

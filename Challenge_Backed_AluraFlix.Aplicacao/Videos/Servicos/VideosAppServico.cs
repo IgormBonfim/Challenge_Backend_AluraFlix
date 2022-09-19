@@ -69,7 +69,8 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
         public VideoResponse Editar(VideoEditarRequest editarRequest)
         {
             editarRequest = editarRequest ?? new VideoEditarRequest();
-            Video videoEditar = mapper.Map<Video>(editarRequest);
+            Video videoEditar = videosServico.Instanciar(editarRequest.TituloVideo, editarRequest.DescVideo, editarRequest.UrlVideo, editarRequest.Categoria);
+            videoEditar.SetIdVideo(editarRequest.IdVideo.Value);
 
             ITransaction transacao = session.BeginTransaction();
 
@@ -103,11 +104,11 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
                 return mapper.Map<VideoIdResponse>(videoInserir);
 
             }
-            catch
+            catch (Exception e)
             {
                 if (transacao.IsActive)
                     transacao.Rollback();
-                return null;
+                throw e;
             }
         }
 
