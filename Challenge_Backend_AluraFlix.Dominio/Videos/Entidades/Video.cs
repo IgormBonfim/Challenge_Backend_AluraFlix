@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,19 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
         public virtual string TituloVideo { get; protected set; }
         public virtual string? DescVideo { get; protected set; }
         public virtual string UrlVideo { get; protected set; }
+        public virtual Categoria CategoriaVideo { get; protected set; }
 
         public Video()
         {
 
         }
 
-        public Video(string titulo, string desc, string url)
+        public Video(string? titulo, string? desc, string? url, Categoria? categoria)
         {
             SetTituloVideo(titulo);
             SetDescVideo(desc);
             SetUrlVideo(url);
+            SetCategoriaVideo(categoria);
         }
 
         public virtual void SetIdVideo(int id)
@@ -57,6 +60,13 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Entidades
             if (url.Length > 255)
                 throw new Exception("A URL não deve conter o número de caracteres superior a 255!");
             UrlVideo = url;
+        }
+
+        public virtual void SetCategoriaVideo(Categoria? categoria)
+        {
+            if (categoria == null)
+                throw new Exception("O campo categoria é obrigatório!");
+            CategoriaVideo = categoria;
         }
     }
 }

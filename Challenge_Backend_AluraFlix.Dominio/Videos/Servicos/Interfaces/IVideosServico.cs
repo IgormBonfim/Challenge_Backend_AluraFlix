@@ -10,7 +10,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces
     public interface IVideosServico
     {
         Video Validar(int id);
-        Video Instanciar(string? titulo, string? desc, string? url);
+        Video Instanciar(string? titulo, string? desc, string? url, int? idCategoria);
         Video Inserir(Video video);
         Video Editar(Video video);
         void Deletar(int idVideo);

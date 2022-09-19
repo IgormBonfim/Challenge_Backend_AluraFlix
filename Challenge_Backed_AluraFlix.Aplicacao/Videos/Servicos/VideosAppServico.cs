@@ -91,7 +91,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
 
         public VideoIdResponse Inserir(VideoInserirRequest inserirRequest)
         {
-            Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo);
+            Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo, inserirRequest.CategoriaId);
 
             ITransaction transacao = session.BeginTransaction();
 

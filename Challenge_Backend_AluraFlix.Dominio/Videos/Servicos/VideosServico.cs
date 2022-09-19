@@ -1,4 +1,6 @@
-﻿using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
+﻿using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using System;
@@ -12,10 +14,12 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
     public class VideosServico : IVideosServico
     {
         private readonly IVideosRepositorio videosRepositorio;
+        private readonly ICategoriasServico categoriasServico;
 
-        public VideosServico(IVideosRepositorio videosRepositorio)
+        public VideosServico(IVideosRepositorio videosRepositorio, ICategoriasServico categoriasServico)
         {
             this.videosRepositorio = videosRepositorio;
+            this.categoriasServico = categoriasServico;
         }
 
         public IList<Video> Buscar(string busca)
@@ -44,9 +48,13 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             return videosRepositorio.Inserir(video);
         }
 
-        public Video Instanciar(string? titulo, string? desc, string? url)
+        public Video Instanciar(string? titulo, string? desc, string? url, int? idCategoria)
         {
-            return new Video(titulo, desc, url);
+            if (!idCategoria.HasValue) idCategoria = 1;
+
+            Categoria categoria = categoriasServico.Validar(idCategoria.Value);
+
+            return new Video(titulo, desc, url, categoria);
         }
 
         public Video Validar(int id)
