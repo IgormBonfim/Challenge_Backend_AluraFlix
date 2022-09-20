@@ -27,6 +27,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             return videosRepositorio.Query().Where(x => x.TituloVideo.Contains(busca)).ToList();
         }
 
+        public IList<Video> Buscar(IQueryable<Video> query)
+        {
+            return query.ToList();
+        }
+
         public void Deletar(int videoId)
         {
             videosRepositorio.Deletar(Validar(videoId));
@@ -56,6 +61,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             Categoria categoria = categoriasServico.Validar(idCategoria.Value);
 
             return new Video(titulo, desc, url, categoria);
+        }
+
+        public IQueryable<Video> Query()
+        {
+            return videosRepositorio.Query();
         }
 
         public Video Validar(int id)

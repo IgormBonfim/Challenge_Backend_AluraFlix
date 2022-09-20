@@ -27,19 +27,35 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             this.mapper = mapper;
         }
 
-        public IList<VideoResponse> Buscar(string busca)
+        public IList<VideoResponse> Buscar(VideoBuscaRequest busca)
         {
             try
             {
-                IList<Video> videosDb = videosServico.Buscar(busca);;
+                var videoQuery = videosServico.Query();
 
-                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
+                if (busca.TituloVideo != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.TituloVideo.Contains(busca.TituloVideo));
+                }
+                if (busca.DescVideo != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.DescVideo.Contains(busca.DescVideo));
+                }
+                if (busca.UrlVideo != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.UrlVideo.Contains(busca.UrlVideo));
+                }
+                if (busca.CategoriaId != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.CategoriaVideo.IdCategoria == busca.CategoriaId);
+                }
 
-                return videosRetorno;
+                IList<Video> videoList = videosServico.Buscar(videoQuery);
+                return mapper.Map<IList<VideoResponse>>(videoList);
             }
-            catch
+            catch (Exception e)
             {
-                return null;
+                throw e;
             }
 
 
