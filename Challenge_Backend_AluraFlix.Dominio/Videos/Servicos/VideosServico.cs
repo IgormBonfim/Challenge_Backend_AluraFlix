@@ -1,4 +1,6 @@
-﻿using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
+﻿using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using System;
@@ -12,10 +14,17 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
     public class VideosServico : IVideosServico
     {
         private readonly IVideosRepositorio videosRepositorio;
+        private readonly ICategoriasServico categoriasServico;
 
-        public VideosServico(IVideosRepositorio videosRepositorio)
+        public VideosServico(IVideosRepositorio videosRepositorio, ICategoriasServico categoriasServico)
         {
             this.videosRepositorio = videosRepositorio;
+            this.categoriasServico = categoriasServico;
+        }
+
+        public IList<Video> Buscar(string busca)
+        {
+            return videosRepositorio.Query().Where(x => x.TituloVideo.Contains(busca)).ToList();
         }
 
         public void Deletar(int videoId)
@@ -30,6 +39,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             if (videoEditar.TituloVideo != video.TituloVideo && video.TituloVideo != null) videoEditar.SetTituloVideo(video.TituloVideo);
             if (videoEditar.DescVideo != video.DescVideo && video.DescVideo != null) videoEditar.SetDescVideo(video.DescVideo);
             if (videoEditar.UrlVideo != video.UrlVideo && video.UrlVideo != null) videoEditar.SetUrlVideo(video.UrlVideo);
+            if (videoEditar.CategoriaVideo != video.CategoriaVideo && video.CategoriaVideo != null) videoEditar.SetCategoriaVideo(video.CategoriaVideo);
 
             return videosRepositorio.Editar(videoEditar);
         }
@@ -39,10 +49,13 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             return videosRepositorio.Inserir(video);
         }
 
-        public Video Instanciar(string? titulo, string? desc, string? url)
+        public Video Instanciar(string? titulo, string? desc, string? url, int? idCategoria)
         {
-            Video video = new Video(titulo, desc, url);
-            return video;
+            if (!idCategoria.HasValue) idCategoria = 1;
+
+            Categoria categoria = categoriasServico.Validar(idCategoria.Value);
+
+            return new Video(titulo, desc, url, categoria);
         }
 
         public Video Validar(int id)
@@ -56,6 +69,12 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
         public IList<Video> Videos()
         {
             IList<Video> videosList = videosRepositorio.Query().ToList();
+            return videosList;
+        }
+
+        public IList<Video> VideosPorCategoria(Categoria categoria)
+        {
+            IList<Video> videosList = videosRepositorio.Query().Where(x => x.CategoriaVideo.IdCategoria == categoria.IdCategoria).ToList();
             return videosList;
         }
     }

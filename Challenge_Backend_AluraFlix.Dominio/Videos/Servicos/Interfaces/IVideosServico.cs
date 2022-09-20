@@ -1,4 +1,5 @@
-﻿using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
+﻿using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces
     public interface IVideosServico
     {
         Video Validar(int id);
-        Video Instanciar(string? titulo, string? desc, string? url);
+        Video Instanciar(string? titulo, string? desc, string? url, int? idCategoria);
         Video Inserir(Video video);
         Video Editar(Video video);
         void Deletar(int idVideo);
         IList<Video> Videos();
+        IList<Video> VideosPorCategoria(Categoria categoria);
+        IList<Video> Buscar(string busca);
     }
 }
