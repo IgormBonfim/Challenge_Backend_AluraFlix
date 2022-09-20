@@ -20,9 +20,9 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
         }
 
         [HttpGet]
-        public ActionResult<IList<CategoriaResponse>> Listar()
+        public ActionResult<IList<CategoriaResponse>> Listar([FromQuery] CategoriaBuscarRequest buscarRequest)
         {
-            var retorno = categoriasAppServico.ListarTodos();
+            var retorno = categoriasAppServico.Buscar(buscarRequest);
             return Ok(retorno);
         }
 

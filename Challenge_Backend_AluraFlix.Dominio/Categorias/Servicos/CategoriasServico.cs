@@ -18,6 +18,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos
             this.categoriasRepositorio = categoriasRepositorio;
         }
 
+        public IList<Categoria> Buscar(IQueryable<Categoria> query)
+        {
+            return query.ToList();
+        }
+
         public void Deletar(int id)
         {
             categoriasRepositorio.Deletar(Validar(id));
@@ -43,10 +48,9 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos
             return new Categoria(titulo, cor);
         }
 
-        public IList<Categoria> Listar()
+        public IQueryable<Categoria> Query()
         {
-            IList<Categoria> categoriasList = categoriasRepositorio.Query().ToList();
-            return categoriasList;
+            return categoriasRepositorio.Query();
         }
 
         public Categoria Validar(int id)

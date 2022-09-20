@@ -16,7 +16,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces
         Object Recuperar(int idCategoria);
         CategoriaIdResponse Editar(CategoriaEditarRequest editarRequest);
         MensagemResponse Deletar(int idCategoria);
-        IList<CategoriaResponse> ListarTodos();
+        IList<CategoriaResponse> Buscar(CategoriaBuscarRequest buscarRequest);
         IList<VideoResponse> ListarPorCategoria(int id);
     }
 }

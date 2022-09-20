@@ -12,6 +12,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Genericos.Servicos
         T Inserir(T inserir);
         T Editar(T editar);
         void Deletar(int id);
-        IList<T> Listar();
+        IQueryable<T> Query();
+        IList<T> Buscar(IQueryable<T> query);
     }
 }

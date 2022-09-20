@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests
 {
-    public class VideoBuscaRequest
+    public class VideoBuscarRequest
     {
         public string? TituloVideo { get; set; }
         public string? DescVideo { get; set; }

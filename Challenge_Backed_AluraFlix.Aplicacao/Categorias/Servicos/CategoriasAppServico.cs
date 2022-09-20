@@ -34,6 +34,32 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
             this.mapper = mapper;
         }
 
+        public IList<CategoriaResponse> Buscar(CategoriaBuscarRequest buscarRequest)
+        {
+            try
+            {
+                var query = categoriasServico.Query();
+
+                if (buscarRequest.TituloCategoria != null)
+                {
+                    query = query.Where(x => x.TituloCategoria.Contains(buscarRequest.TituloCategoria));
+                }
+                if (buscarRequest.CorCategoria != null)
+                {
+                    query = query.Where(x => x.CorCategoria == buscarRequest.CorCategoria);
+                }
+
+                IList<Categoria> categoriasList = categoriasServico.Buscar(query);
+
+                return mapper.Map<IList<CategoriaResponse>>(categoriasList);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
         public MensagemResponse Deletar(int idCategoria)
         {
             ITransaction transacao = session.BeginTransaction();
@@ -104,7 +130,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
             {
                 Categoria categoria = categoriasServico.Validar(id);
 
-                VideoBuscaRequest request = new VideoBuscaRequest();
+                VideoBuscarRequest request = new VideoBuscarRequest();
                 request.CategoriaId = categoria.IdCategoria;
                 return videosAppServico.Buscar(request);
             }
@@ -113,20 +139,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
                 throw e;
             }
 
-        }
-
-        public IList<CategoriaResponse> ListarTodos()
-        {
-            try
-            {
-                IList<Categoria> categoriasDb = categoriasServico.Listar();
-                IList<CategoriaResponse> categorias = mapper.Map<IList<CategoriaResponse>>(categoriasDb);
-                return categorias;
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         public Object Recuperar(int idCategoria)

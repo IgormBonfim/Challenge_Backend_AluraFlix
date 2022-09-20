@@ -27,7 +27,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             this.mapper = mapper;
         }
 
-        public IList<VideoResponse> Buscar(VideoBuscaRequest busca)
+        public IList<VideoResponse> Buscar(VideoBuscarRequest busca)
         {
             try
             {
