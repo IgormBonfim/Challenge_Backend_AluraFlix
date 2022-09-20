@@ -17,7 +17,6 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces
         void Deletar(int idVideo);
         IQueryable<Video> Query();
         IList<Video> Buscar(IQueryable<Video> query);
-        IList<Video> Videos();
         IList<Video> VideosPorCategoria(Categoria categoria);
         IList<Video> Buscar(string busca);
     }

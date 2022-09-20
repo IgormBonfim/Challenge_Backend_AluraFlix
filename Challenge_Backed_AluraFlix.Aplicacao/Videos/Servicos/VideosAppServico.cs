@@ -129,23 +129,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             }
         }
 
-        public IList<VideoResponse> ListarTodos()
-        {
-            try
-            {
-                IList<Video> videosDb = videosServico.Videos();
-
-                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
-
-                return videosRetorno;
-            }
-            catch
-            {
-                return null;
-            }
-
-        }
-
         public Object Recuperar(int idVideo)
         {
             try
