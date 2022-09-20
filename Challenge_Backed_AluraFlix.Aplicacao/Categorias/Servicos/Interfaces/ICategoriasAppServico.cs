@@ -1,6 +1,7 @@
 ﻿using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces
         CategoriaIdResponse Editar(CategoriaEditarRequest editarRequest);
         MensagemResponse Deletar(int idCategoria);
         IList<CategoriaResponse> ListarTodos();
+        IList<VideoResponse> ListarPorCategoria(int id);
     }
 }

@@ -71,5 +71,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             IList<Video> videosList = videosRepositorio.Query().ToList();
             return videosList;
         }
+
+        public IList<Video> VideosPorCategoria(Categoria categoria)
+        {
+            IList<Video> videosList = videosRepositorio.Query().Where(x => x.CategoriaVideo.IdCategoria == categoria.IdCategoria).ToList();
+            return videosList;
+        }
     }
 }

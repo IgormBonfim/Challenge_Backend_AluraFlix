@@ -3,8 +3,11 @@ using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using NHibernate;
 using System;
 using System.Collections.Generic;
@@ -17,12 +20,14 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
     public class CategoriasAppServico : ICategoriasAppServico
     {
         private readonly ICategoriasServico categoriasServico;
+        private readonly IVideosServico videosServico;
         private readonly ISession session;
         private readonly IMapper mapper;
 
-        public CategoriasAppServico(ICategoriasServico categoriasServico, ISession session, IMapper mapper)
+        public CategoriasAppServico(ICategoriasServico categoriasServico, IVideosServico videosServico, ISession session, IMapper mapper)
         {
             this.categoriasServico = categoriasServico;
+            this.videosServico = videosServico;
             this.session = session;
             this.mapper = mapper;
         }
@@ -89,6 +94,22 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
                     transacao.Rollback();
                 return null;
             }
+        }
+
+        public IList<VideoResponse> ListarPorCategoria(int id)
+        {
+            try
+            {
+                Categoria categoria = categoriasServico.Validar(id);
+                IList<Video> videosDb = videosServico.VideosPorCategoria(categoria);
+                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
+                return videosRetorno;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
         }
 
         public IList<CategoriaResponse> ListarTodos()

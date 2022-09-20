@@ -11,6 +11,5 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces
     public interface ICategoriasServico : IGenericosServico<Categoria>
     {
         Categoria Instanciar(string? titulo, string? cor);
-
     }
 }

@@ -2,12 +2,13 @@
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
 {
-    [Route("api/[controller]")]
+    [Route("api/categorias")]
     [ApiController]
     public class CategoriasController : ControllerBase
     {
@@ -25,17 +26,24 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
             return Ok(retorno);
         }
 
-        [HttpPost]
-        public ActionResult<CategoriaIdResponse> Inserir([FromBody] CategoriaInserirRequest inserirRequest)
-        {
-            var retorno = categoriasAppServico.Inserir(inserirRequest);
-            return Ok(retorno);
-        }
-
         [HttpGet("{id}")]
         public ActionResult<Object> Recuperar(int id)
         {
             var retorno = categoriasAppServico.Recuperar(id);
+            return Ok(retorno);
+        }
+
+        [HttpGet("{id}/videos")]
+        public ActionResult<List<VideoResponse>> VideosPorCategoria(int id)
+        {
+            var retorno = categoriasAppServico.ListarPorCategoria(id);
+            return Ok(retorno);
+        }
+
+        [HttpPost]
+        public ActionResult<CategoriaIdResponse> Inserir([FromBody] CategoriaInserirRequest inserirRequest)
+        {
+            var retorno = categoriasAppServico.Inserir(inserirRequest);
             return Ok(retorno);
         }
 
