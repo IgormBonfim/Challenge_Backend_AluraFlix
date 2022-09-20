@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
@@ -20,14 +22,14 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
     public class CategoriasAppServico : ICategoriasAppServico
     {
         private readonly ICategoriasServico categoriasServico;
-        private readonly IVideosServico videosServico;
+        private readonly IVideosAppServico videosAppServico;
         private readonly ISession session;
         private readonly IMapper mapper;
 
-        public CategoriasAppServico(ICategoriasServico categoriasServico, IVideosServico videosServico, ISession session, IMapper mapper)
+        public CategoriasAppServico(ICategoriasServico categoriasServico, IVideosAppServico videosAppServico, ISession session, IMapper mapper)
         {
             this.categoriasServico = categoriasServico;
-            this.videosServico = videosServico;
+            this.videosAppServico = videosAppServico;
             this.session = session;
             this.mapper = mapper;
         }
@@ -101,9 +103,10 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
             try
             {
                 Categoria categoria = categoriasServico.Validar(id);
-                IList<Video> videosDb = videosServico.VideosPorCategoria(categoria);
-                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
-                return videosRetorno;
+
+                VideoBuscaRequest request = new VideoBuscaRequest();
+                request.CategoriaId = categoria.IdCategoria;
+                return videosAppServico.Buscar(request);
             }
             catch (Exception e)
             {
