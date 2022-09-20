@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses
         public string TituloVideo { get; set; }
         public string? DescVideo { get; set; }
         public string UrlVideo { get; set; }
+        public CategoriaResponse CategoriaVideo { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses
 {
     public class VideoIdResponse
     {
-        public int VideoId { get; set; }
+        public int IdVideo { get; set; }
     }
 }

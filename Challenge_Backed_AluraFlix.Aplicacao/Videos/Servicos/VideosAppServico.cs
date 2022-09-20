@@ -68,14 +68,15 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
 
         public VideoResponse Editar(VideoEditarRequest editarRequest)
         {
-            editarRequest = editarRequest ?? new VideoEditarRequest();
-            Video videoEditar = videosServico.Instanciar(editarRequest.TituloVideo, editarRequest.DescVideo, editarRequest.UrlVideo, editarRequest.Categoria);
-            videoEditar.SetIdVideo(editarRequest.IdVideo.Value);
 
             ITransaction transacao = session.BeginTransaction();
 
             try
             {
+                editarRequest = editarRequest ?? new VideoEditarRequest();
+                Video videoEditar = videosServico.Instanciar(editarRequest.TituloVideo, editarRequest.DescVideo, editarRequest.UrlVideo, editarRequest.Categoria);
+                videoEditar.SetIdVideo(editarRequest.IdVideo.Value);
+
                 videosServico.Editar(videoEditar);
                 if (transacao.IsActive)
                     transacao.Commit();
@@ -92,12 +93,12 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
 
         public VideoIdResponse Inserir(VideoInserirRequest inserirRequest)
         {
-            Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo, inserirRequest.CategoriaId);
-
             ITransaction transacao = session.BeginTransaction();
 
             try
             {
+                Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo, inserirRequest.CategoriaId);
+
                 videoInserir = videosServico.Inserir(videoInserir);
                 if (transacao.IsActive)
                     transacao.Commit();
