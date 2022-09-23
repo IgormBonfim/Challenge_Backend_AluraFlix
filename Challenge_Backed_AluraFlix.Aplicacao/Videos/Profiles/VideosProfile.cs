@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Profiles
+namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Profiles
 {
     public class VideosProfile : Profile
     {

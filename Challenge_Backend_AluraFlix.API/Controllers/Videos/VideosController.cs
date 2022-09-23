@@ -1,4 +1,4 @@
-﻿using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+﻿using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;

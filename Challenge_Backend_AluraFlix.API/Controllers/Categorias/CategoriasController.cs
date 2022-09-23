@@ -1,4 +1,4 @@
-﻿using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+﻿using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;

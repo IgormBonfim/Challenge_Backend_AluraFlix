@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
-using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos
+namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos
 {
     public class CategoriasAppServico : ICategoriasAppServico
     {

@@ -1,8 +1,8 @@
-using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos;
-using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
-using Challenge_Backed_AluraFlix.Aplicacao.Videos.Profiles;
-using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos;
-using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos;
+using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Profiles;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
