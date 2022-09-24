@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backed_AluraFlix.Aplicacao.csproj" />
+    <ProjectReference Include="..\Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backend_AluraFlix.Aplicacao.csproj" />
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj" />
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.Dominio\Challenge_Backend_AluraFlix.Dominio.csproj" />
   </ItemGroup>

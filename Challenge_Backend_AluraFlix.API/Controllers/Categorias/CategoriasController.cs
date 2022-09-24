@@ -1,4 +1,4 @@
-﻿using Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+﻿using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
@@ -20,9 +20,9 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
         }
 
         [HttpGet]
-        public ActionResult<IList<CategoriaResponse>> Listar()
+        public ActionResult<IList<CategoriaResponse>> Listar([FromQuery] CategoriaBuscarRequest buscarRequest)
         {
-            var retorno = categoriasAppServico.ListarTodos();
+            var retorno = categoriasAppServico.Buscar(buscarRequest);
             return Ok(retorno);
         }
 

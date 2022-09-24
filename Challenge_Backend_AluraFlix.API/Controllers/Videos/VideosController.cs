@@ -1,4 +1,4 @@
-﻿using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+﻿using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
@@ -25,17 +25,10 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
             return Ok(retorno);
         }
 
-        [HttpGet]
-        public ActionResult<VideoResponse> Listar()
-        {
-            var retorno = videosAppServico.ListarTodos();
-            return Ok(retorno);
-        }
-
         [HttpGet("search")]
-        public ActionResult<VideoResponse> BuscarPorTitulo([FromQuery] string titulo)
+        public ActionResult<VideoResponse> BuscarPorTitulo([FromQuery] VideoBuscarRequest request)
         {
-            var retorno = videosAppServico.Buscar(titulo);
+            var retorno = videosAppServico.Buscar(request);
             return Ok(retorno);
         }
 

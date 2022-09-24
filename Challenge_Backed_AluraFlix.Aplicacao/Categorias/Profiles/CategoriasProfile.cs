@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Profiles
+namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Profiles
 {
     public class CategoriasProfile : Profile
     {

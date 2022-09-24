@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
+namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
 {
     public class VideosAppServico : IVideosAppServico
     {
@@ -27,19 +27,35 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
             this.mapper = mapper;
         }
 
-        public IList<VideoResponse> Buscar(string busca)
+        public IList<VideoResponse> Buscar(VideoBuscarRequest busca)
         {
             try
             {
-                IList<Video> videosDb = videosServico.Buscar(busca);;
+                var videoQuery = videosServico.Query();
 
-                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
+                if (busca.TituloVideo != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.TituloVideo.Contains(busca.TituloVideo));
+                }
+                if (busca.DescVideo != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.DescVideo.Contains(busca.DescVideo));
+                }
+                if (busca.UrlVideo != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.UrlVideo.Contains(busca.UrlVideo));
+                }
+                if (busca.CategoriaId != null)
+                {
+                    videoQuery = videoQuery.Where(x => x.CategoriaVideo.IdCategoria == busca.CategoriaId);
+                }
 
-                return videosRetorno;
+                IList<Video> videoList = videosServico.Buscar(videoQuery);
+                return mapper.Map<IList<VideoResponse>>(videoList);
             }
-            catch
+            catch (Exception e)
             {
-                return null;
+                throw e;
             }
 
 
@@ -111,23 +127,6 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Videos.Servicos
                     transacao.Rollback();
                 throw e;
             }
-        }
-
-        public IList<VideoResponse> ListarTodos()
-        {
-            try
-            {
-                IList<Video> videosDb = videosServico.Videos();
-
-                IList<VideoResponse> videosRetorno = mapper.Map<IList<VideoResponse>>(videosDb);
-
-                return videosRetorno;
-            }
-            catch
-            {
-                return null;
-            }
-
         }
 
         public Object Recuperar(int idVideo)

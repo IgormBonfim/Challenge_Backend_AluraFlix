@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces
+namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces
 {
     public interface ICategoriasAppServico
     {
@@ -16,7 +16,7 @@ namespace Challenge_Backed_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces
         Object Recuperar(int idCategoria);
         CategoriaIdResponse Editar(CategoriaEditarRequest editarRequest);
         MensagemResponse Deletar(int idCategoria);
-        IList<CategoriaResponse> ListarTodos();
+        IList<CategoriaResponse> Buscar(CategoriaBuscarRequest buscarRequest);
         IList<VideoResponse> ListarPorCategoria(int id);
     }
 }
