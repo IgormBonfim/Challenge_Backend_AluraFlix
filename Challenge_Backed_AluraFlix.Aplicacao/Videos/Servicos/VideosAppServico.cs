@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
@@ -19,18 +21,22 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
         private readonly IVideosServico videosServico;
         private readonly ISession session;
         private readonly IMapper mapper;
+        private readonly IPaginacaoServico paginacaoServico;
 
-        public VideosAppServico(IVideosServico videosServico, ISession session, IMapper mapper)
+        public VideosAppServico(IVideosServico videosServico, ISession session, IMapper mapper, IPaginacaoServico paginacaoServico)
         {
             this.videosServico = videosServico;
             this.session = session;
             this.mapper = mapper;
+            this.paginacaoServico = paginacaoServico;
         }
 
         public IList<VideoResponse> Buscar(VideoBuscarRequest busca)
         {
             try
             {
+                var paginacao = paginacaoServico.Paginar(busca);
+
                 var videoQuery = videosServico.Query();
 
                 if (busca.TituloVideo != null)
@@ -50,7 +56,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
                     videoQuery = videoQuery.Where(x => x.CategoriaVideo.IdCategoria == busca.CategoriaId);
                 }
 
-                IList<Video> videoList = videosServico.Buscar(videoQuery);
+                IList<Video> videoList = videosServico.Buscar(videoQuery, paginacao.Limit, paginacao.Offset);
                 return mapper.Map<IList<VideoResponse>>(videoList);
             }
             catch (Exception e)
