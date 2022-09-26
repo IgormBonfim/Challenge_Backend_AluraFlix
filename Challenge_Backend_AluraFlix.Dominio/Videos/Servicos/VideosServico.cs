@@ -27,9 +27,9 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             return videosRepositorio.Query().Where(x => x.TituloVideo.Contains(busca)).ToList();
         }
 
-        public IList<Video> Buscar(IQueryable<Video> query)
+        public IList<Video> Buscar(IQueryable<Video> query, int limit, int offset)
         {
-            return query.ToList();
+            return query.Take(limit).Skip(offset).ToList();
         }
 
         public void Deletar(int videoId)

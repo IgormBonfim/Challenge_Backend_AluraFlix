@@ -1,5 +1,7 @@
 using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos;
+using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Profiles;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
@@ -51,6 +53,7 @@ builder.Services.AddSingleton<IVideosAppServico, VideosAppServico>();
 builder.Services.AddSingleton<ICategoriasRepositorio, CategoriasRepositorio>();
 builder.Services.AddSingleton<ICategoriasServico, CategoriasServico>();
 builder.Services.AddSingleton<ICategoriasAppServico, CategoriasAppServico>();
+builder.Services.AddSingleton<IPaginacaoServico, PaginacaoServico>();
 
 builder.Services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
 
