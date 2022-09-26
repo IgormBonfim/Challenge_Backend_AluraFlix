@@ -21,21 +21,21 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
         private readonly IVideosServico videosServico;
         private readonly ISession session;
         private readonly IMapper mapper;
-        private readonly IPaginacaoServico paginacaoServico;
+        private readonly IPaginacaoAppServico paginacaoAppServico;
 
-        public VideosAppServico(IVideosServico videosServico, ISession session, IMapper mapper, IPaginacaoServico paginacaoServico)
+        public VideosAppServico(IVideosServico videosServico, ISession session, IMapper mapper, IPaginacaoAppServico paginacaoAppServico)
         {
             this.videosServico = videosServico;
             this.session = session;
             this.mapper = mapper;
-            this.paginacaoServico = paginacaoServico;
+            this.paginacaoAppServico = paginacaoAppServico;
         }
 
         public IList<VideoResponse> Buscar(VideoBuscarRequest busca)
         {
             try
             {
-                var paginacao = paginacaoServico.Paginar(busca);
+                var paginacao = paginacaoAppServico.Paginar(busca);
 
                 var videoQuery = videosServico.Query();
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos
 {
-    public class PaginacaoServico : IPaginacaoServico
+    public class PaginacaoAppServico : IPaginacaoAppServico
     {
 
         public PaginacaoResponse Paginar(PaginacaoRequest paginacao)

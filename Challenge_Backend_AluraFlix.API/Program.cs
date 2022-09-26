@@ -53,7 +53,7 @@ builder.Services.AddSingleton<IVideosAppServico, VideosAppServico>();
 builder.Services.AddSingleton<ICategoriasRepositorio, CategoriasRepositorio>();
 builder.Services.AddSingleton<ICategoriasServico, CategoriasServico>();
 builder.Services.AddSingleton<ICategoriasAppServico, CategoriasAppServico>();
-builder.Services.AddSingleton<IPaginacaoServico, PaginacaoServico>();
+builder.Services.AddSingleton<IPaginacaoAppServico, PaginacaoAppServico>();
 
 builder.Services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
 
