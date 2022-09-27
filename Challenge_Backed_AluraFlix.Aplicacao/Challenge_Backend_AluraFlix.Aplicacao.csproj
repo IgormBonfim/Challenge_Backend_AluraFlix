@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.Infra\Challenge_Backend_AluraFlix.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Usuarios\Profiles\" />
+  </ItemGroup>
+
 </Project>

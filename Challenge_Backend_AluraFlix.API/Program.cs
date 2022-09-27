@@ -2,17 +2,21 @@ using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos;
+using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Profiles;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Dominio.Usuario.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Infra.Categorias;
 using Challenge_Backend_AluraFlix.Infra.Categorias.Mapeamentos;
+using Challenge_Backend_AluraFlix.Infra.Usuario.Autenticacao;
 using Challenge_Backend_AluraFlix.Infra.Videos;
 using Challenge_Backend_AluraFlix.Infra.Videos.Mapeamentos;
 using FluentNHibernate.Cfg;
@@ -54,6 +58,9 @@ builder.Services.AddSingleton<ICategoriasRepositorio, CategoriasRepositorio>();
 builder.Services.AddSingleton<ICategoriasServico, CategoriasServico>();
 builder.Services.AddSingleton<ICategoriasAppServico, CategoriasAppServico>();
 builder.Services.AddSingleton<IPaginacaoAppServico, PaginacaoAppServico>();
+builder.Services.AddSingleton<IAutenticacaoAppServico, AutenticacaoAppServico>();
+
+builder.Services.AddSingleton<IGeradorTokenJwt, GeradorTokenJwt>();
 
 builder.Services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
 
