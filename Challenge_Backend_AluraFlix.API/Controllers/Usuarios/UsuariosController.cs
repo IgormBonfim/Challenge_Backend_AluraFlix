@@ -17,10 +17,17 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
             this.autenticacaoAppServico = autenticacaoAppServico;
         }
 
-        [HttpPost]
+        [HttpPost("registrar")]
         public IActionResult Registrar(UsuarioRegistrarRequest request)
         {
             var retorno = autenticacaoAppServico.Registrar(request);
+            return Ok(retorno);
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login(UsuarioLoginRequest request)
+        {
+            var retorno = autenticacaoAppServico.Login(request);
             return Ok(retorno);
         }
     }
