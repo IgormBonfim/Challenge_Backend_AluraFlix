@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backend_AluraFlix.Dominio.Usuario.Servicos.Interfaces
+namespace Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces
 {
     public interface IGeradorTokenJwt
     {

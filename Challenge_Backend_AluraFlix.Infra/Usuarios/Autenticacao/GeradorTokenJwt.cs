@@ -1,4 +1,4 @@
-﻿using Challenge_Backend_AluraFlix.Dominio.Usuario.Servicos.Interfaces;
+﻿using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_Backend_AluraFlix.Infra.Usuario.Autenticacao
+namespace Challenge_Backend_AluraFlix.Infra.Usuarios.Autenticacao
 {
     public class GeradorTokenJwt : IGeradorTokenJwt
     {
