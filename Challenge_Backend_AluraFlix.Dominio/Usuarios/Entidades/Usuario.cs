@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Challenge_Backend_AluraFlix.Dominio.Usuario.Entidades
+namespace Challenge_Backend_AluraFlix.Dominio.Usuarios.Entidades
 {
     public class Usuario
     {
@@ -21,10 +21,18 @@ namespace Challenge_Backend_AluraFlix.Dominio.Usuario.Entidades
 
         public Usuario(string? nomeUsuario, string? sobrenomeUsuario, string? emailUsuario)
         {
+            IdUsuario = Guid.NewGuid();
             SetNomeUsuario(nomeUsuario);
             SetSobrenomeUsuario(sobrenomeUsuario);
             SetEmailUsuario(emailUsuario);
+        }
 
+        public Usuario(Guid id, string? nomeUsuario, string? sobrenomeUsuario, string? emailUsuario)
+        {
+            SetIdUsuario(id);
+            SetNomeUsuario(nomeUsuario);
+            SetSobrenomeUsuario(sobrenomeUsuario);
+            SetEmailUsuario(emailUsuario);
         }
 
         public virtual void SetIdUsuario(Guid idUsuario)
