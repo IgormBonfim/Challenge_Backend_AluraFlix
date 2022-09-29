@@ -3,6 +3,7 @@ using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Profiles;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Autenticacao.Data;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
@@ -15,6 +16,7 @@ using Challenge_Backend_AluraFlix.Infra.Videos;
 using Challenge_Backend_AluraFlix.Infra.Videos.Mapeamentos;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Microsoft.EntityFrameworkCore;
 using NHibernate;
 using ISession = NHibernate.ISession;
 
@@ -41,6 +43,13 @@ builder.Services.AddSingleton<ISessionFactory>(factory =>
                         })
                         .BuildSessionFactory();
 });
+
+builder.Services.AddDbContext<IdentityDataContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("MySql"),
+        ServerVersion.Parse("8.0.28")
+        )
+);
 
 builder.Services.AddAutoMapper(typeof(VideosProfile));
 
