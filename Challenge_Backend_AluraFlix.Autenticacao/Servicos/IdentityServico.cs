@@ -33,7 +33,6 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
             {
                 UserName = usuarioCadastro.Email,
                 Email = usuarioCadastro.Email,
-                EmailConfirmed = true
             };
 
             var result = await userManager.CreateAsync(identityUser, usuarioCadastro.Senha);

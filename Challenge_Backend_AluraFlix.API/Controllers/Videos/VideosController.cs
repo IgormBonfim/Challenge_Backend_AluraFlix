@@ -39,7 +39,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
         [HttpGet("free")]
         public ActionResult<IList<VideoResponse>> VideosGratuitos()
         {
-            VideoBuscarRequest filtros = new VideoBuscarRequest()
+            VideoBuscarRequest filtros = new VideoBuscarRequest();
             var retorno = videosAppServico.Buscar(filtros);
             return Ok(retorno);
         }

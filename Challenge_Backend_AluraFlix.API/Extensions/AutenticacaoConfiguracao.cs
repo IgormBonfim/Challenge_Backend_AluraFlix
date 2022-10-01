@@ -28,6 +28,7 @@ namespace Challenge_Backend_AluraFlix.API.Extensions
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
+                options.SignIn.RequireConfirmedEmail = true;
             });
 
             var tokenValidationParameters = new TokenValidationParameters

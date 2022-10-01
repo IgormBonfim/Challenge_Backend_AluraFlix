@@ -34,6 +34,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddAutenticacao(builder.Configuration);
 builder.Services.AddSingleton<ISessionFactory>(factory =>
 {
@@ -72,7 +73,9 @@ builder.Services.AddSingleton<IVideosAppServico, VideosAppServico>();
 builder.Services.AddSingleton<ICategoriasRepositorio, CategoriasRepositorio>();
 builder.Services.AddSingleton<ICategoriasServico, CategoriasServico>();
 builder.Services.AddSingleton<ICategoriasAppServico, CategoriasAppServico>();
+builder.Services.AddSingleton<IPaginacaoAppServico, PaginacaoAppServico>();
 
+builder.Services.AddScoped<IIdentityServico, IdentityServico>();
 
 builder.Services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
 
