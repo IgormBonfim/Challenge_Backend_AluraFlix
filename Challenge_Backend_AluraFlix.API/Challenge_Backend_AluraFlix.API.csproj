@@ -7,26 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="FluentNHibernate" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MySql.Data" Version="8.0.30" />
-    <PackageReference Include="MySqlConnector" Version="2.1.13" />
-    <PackageReference Include="NHibernate" Version="5.3.13" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backend_AluraFlix.Aplicacao.csproj" />
-    <ProjectReference Include="..\Challenge_Backend_AluraFlix.Autenticacao\Challenge_Backend_AluraFlix.Autenticacao.csproj" />
     <ProjectReference Include="..\Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj" />
-    <ProjectReference Include="..\Challenge_Backend_AluraFlix.Dominio\Challenge_Backend_AluraFlix.Dominio.csproj" />
+    <ProjectReference Include="..\Challenge_Backend_AluraFlix.Ioc\Challenge_Backend_AluraFlix.Ioc.csproj" />
   </ItemGroup>
 
 </Project>

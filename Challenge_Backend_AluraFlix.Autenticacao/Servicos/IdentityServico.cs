@@ -4,13 +4,8 @@ using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 {
