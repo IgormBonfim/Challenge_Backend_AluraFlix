@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix.API", "Challenge_Backend_AluraFlix.API\Challenge_Backend_AluraFlix.API.csproj", "{691BE9D2-9E63-462D-A67A-103E393F919F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix.Aplicacao", "Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backend_AluraFlix.Aplicacao.csproj", "{98002C2C-116F-4DC4-8546-22B919CE3BE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix.Aplicacao", "Challenge_Backend_AluraFlix.Aplicacao\Challenge_Backend_AluraFlix.Aplicacao.csproj", "{98002C2C-116F-4DC4-8546-22B919CE3BE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix.DataTransfer", "Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj", "{3710CC59-E615-4F5E-861E-1F0D0F03D7F7}"
 EndProject
