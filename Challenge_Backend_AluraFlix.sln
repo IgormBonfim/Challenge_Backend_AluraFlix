@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix.Infra", "Challenge_Backend_AluraFlix.Infra\Challenge_Backend_AluraFlix.Infra.csproj", "{71D3B552-1FC1-480B-BEDB-3BC2DB52F2F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backend_AluraFlix.Autenticacao", "Challenge_Backend_AluraFlix.Autenticacao\Challenge_Backend_AluraFlix.Autenticacao.csproj", "{61E6A2C1-6B84-4CDD-8D3C-3941578F81F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenge_Backend_AluraFlix.Autenticacao", "Challenge_Backend_AluraFlix.Autenticacao\Challenge_Backend_AluraFlix.Autenticacao.csproj", "{61E6A2C1-6B84-4CDD-8D3C-3941578F81F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Backend_AluraFlix.Ioc", "Challenge_Backend_AluraFlix.Ioc\Challenge_Backend_AluraFlix.Ioc.csproj", "{7600030E-15F6-430D-88D4-439024DEF0D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{61E6A2C1-6B84-4CDD-8D3C-3941578F81F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61E6A2C1-6B84-4CDD-8D3C-3941578F81F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61E6A2C1-6B84-4CDD-8D3C-3941578F81F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7600030E-15F6-430D-88D4-439024DEF0D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7600030E-15F6-430D-88D4-439024DEF0D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7600030E-15F6-430D-88D4-439024DEF0D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7600030E-15F6-430D-88D4-439024DEF0D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
