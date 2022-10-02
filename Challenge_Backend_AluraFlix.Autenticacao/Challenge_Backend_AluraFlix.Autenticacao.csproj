@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.9" />
@@ -18,8 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Challenge_Backed_AluraFlix.Aplicacao\Challenge_Backend_AluraFlix.Aplicacao.csproj" />
-    <ProjectReference Include="..\Challenge_Backend_AluraFlix.Aplicacao\Challenge_Backend_AluraFlix.Aplicacao.csproj" />
+    <ProjectReference Include="..\Challenge_Backend_AluraFlix.DataTransfer\Challenge_Backend_AluraFlix.DataTransfer.csproj" />
   </ItemGroup>
 
 </Project>

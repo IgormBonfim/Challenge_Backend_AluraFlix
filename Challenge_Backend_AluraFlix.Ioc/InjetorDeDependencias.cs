@@ -26,6 +26,10 @@ using Microsoft.EntityFrameworkCore;
 using NHibernate;
 using ISession = NHibernate.ISession;
 using Challenge_Backend_AluraFlix.Ioc.Extensions;
+using MailKit.Net.Smtp;
+using Challenge_Backend_AluraFlix.Autenticacao.Configuracoes;
+using Challenge_Backend_AluraFlix.Autenticacao.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos;
 
 namespace Challenge_Backend_AluraFlix.Ioc
 {
@@ -70,6 +74,9 @@ namespace Challenge_Backend_AluraFlix.Ioc
             services.AddSingleton<ICategoriasAppServico, CategoriasAppServico>();
             services.AddSingleton<IPaginacaoAppServico, PaginacaoAppServico>();
 
+            services.AddScoped<IUsuarioAppServico, UsuarioAppServico>();
+            services.AddScoped<IEmailServico, EmailServico>();
+            services.AddScoped<ISmtpClient, SmtpClient>();
             services.AddScoped<IIdentityServico, IdentityServico>();
 
             services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());

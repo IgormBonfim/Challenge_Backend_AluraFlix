@@ -12,35 +12,49 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly IIdentityServico identityServico;
+        private readonly IUsuarioAppServico usuarioAppServico;
 
-        public UsuariosController(IIdentityServico identityServico)
+        public UsuariosController(IUsuarioAppServico usuarioAppServico)
         {
-            this.identityServico = identityServico;
+            this.usuarioAppServico = usuarioAppServico;
         }
 
         [HttpPost("cadastrar")]
-        public async Task<ActionResult<UsuarioCadastroResponse>> Cadastrar(UsuarioCadastroRequest usuarioCadastro)
+        public ActionResult<UsuarioCadastroResponse> Cadastrar(UsuarioCadastroRequest usuarioCadastro)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var retorno = await identityServico.CadastrarUsuario(usuarioCadastro);
+            var retorno = usuarioAppServico.Cadastrar(usuarioCadastro);
             if (retorno.Sucesso)
                 return Ok(retorno);
             return BadRequest(retorno);
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UsuarioLoginResponse>> Login(UsuarioLoginRequest usuarioLogin)
+        public ActionResult<UsuarioLoginResponse> Login(UsuarioLoginRequest usuarioLogin)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var retorno = await identityServico.Login(usuarioLogin);
+            var retorno = usuarioAppServico.Login(usuarioLogin);
             if (retorno.Sucesso)
                 return Ok(retorno);
             return BadRequest(retorno);
+        }
+
+        [HttpGet("ativar")]
+        public ActionResult<UsuarioAtivarResponse> ConfirmarEmail([FromQuery] UsuarioAtivarRequest usuarioAtivar)
+        {
+            var retorno = usuarioAppServico.Ativar(usuarioAtivar);
+            return Ok(retorno);
+        }
+
+        [HttpPost("logout")]
+        public ActionResult Logout()
+        {
+            var retorno = usuarioAppServico.Logout();
+            return Ok(retorno);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Challenge_Backend_AluraFlix.Ioc.Extensions
         public static void AddAutenticacao(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtAppSettingOptions = configuration.GetSection(nameof(JwtOptions));
+            var EmailOptions = configuration.GetSection(nameof(EmailSettings));
             var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration.GetSection("JwtOptions:SecurityKey").Value));
 
             services.Configure<JwtOptions>(options =>
@@ -25,6 +26,14 @@ namespace Challenge_Backend_AluraFlix.Ioc.Extensions
                 options.Audience = jwtAppSettingOptions[nameof(JwtOptions.Audience)];
                 options.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
                 options.Expiration = int.Parse(jwtAppSettingOptions[nameof(JwtOptions.Expiration)] ?? "0");
+            });
+
+            services.Configure<EmailSettings>(options =>
+            {
+                options.From = EmailOptions[nameof(EmailSettings.From)];
+                options.SmtpServer = EmailOptions[nameof(EmailSettings.SmtpServer)];
+                options.Port = int.Parse(EmailOptions[nameof(EmailSettings.Port)]);
+                options.Password = EmailOptions[nameof(EmailSettings.Password)];
             });
 
             services.Configure<IdentityOptions>(options =>

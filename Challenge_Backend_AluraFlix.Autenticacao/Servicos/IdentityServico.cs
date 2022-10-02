@@ -1,11 +1,12 @@
-﻿using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces;
-using Challenge_Backend_AluraFlix.Autenticacao.Configuracoes;
+﻿using Challenge_Backend_AluraFlix.Autenticacao.Configuracoes;
+using Challenge_Backend_AluraFlix.Autenticacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Web;
 
 namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 {
@@ -22,6 +23,20 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
             this.jwtOptions = jwtOptions.Value;
         }
 
+        public async Task<UsuarioAtivarResponse> Ativar(UsuarioAtivarRequest usuarioAtivarRequest)
+        {
+            var identityUser = userManager.Users.FirstOrDefault(u => u.Id == usuarioAtivarRequest.IdUsuario);
+            var identityResult = await userManager.ConfirmEmailAsync(identityUser, usuarioAtivarRequest.TokenAtivacao);
+
+            var usuarioAtivarResponse = new UsuarioAtivarResponse(identityResult.Succeeded);
+
+            if (!identityResult.Succeeded && identityResult.Errors.Count() > 0)
+                usuarioAtivarResponse.AdicionarErros(identityResult.Errors.Select(r => r.Description));
+
+            return usuarioAtivarResponse;
+            
+        }
+
         public async Task<UsuarioCadastroResponse> CadastrarUsuario(UsuarioCadastroRequest usuarioCadastro)
         {
             var identityUser = new IdentityUser
@@ -31,10 +46,18 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
             };
 
             var result = await userManager.CreateAsync(identityUser, usuarioCadastro.Senha);
-            if (result.Succeeded)
-                await userManager.SetLockoutEnabledAsync(identityUser, false);
 
-            var usuarioCadastroResponse = new UsuarioCadastroResponse(result.Succeeded);
+            UsuarioCadastroResponse usuarioCadastroResponse = new UsuarioCadastroResponse(result.Succeeded);
+
+            if (result.Succeeded)
+            {
+                usuarioCadastroResponse.IdUsuario = userManager.Users.FirstOrDefault(u => u.Email == usuarioCadastro.Email).Id;
+
+                var tokenAtivacao = userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
+                usuarioCadastroResponse.TokenEmail = HttpUtility.UrlEncode(tokenAtivacao);
+                await userManager.SetLockoutEnabledAsync(identityUser, false);
+            }
+
             if (!result.Succeeded && result.Errors.Count() > 0)
                 usuarioCadastroResponse.AdicionarErros(result.Errors.Select(r => r.Description));
 
@@ -61,6 +84,14 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
             }
 
             return usuarioLoginResponse;
+        }
+
+        public UsuarioLogoutResponse Logout()
+        {
+            var result = signInManager.SignOutAsync();
+
+            UsuarioLogoutResponse usuarioLogoutResponse = new UsuarioLogoutResponse(result.IsCompletedSuccessfully);
+            return usuarioLogoutResponse;
         }
 
         private async Task<UsuarioLoginResponse> GerarToken(string email)
