@@ -47,5 +47,17 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos
         {
             return identityServico.Logout();
         }
+
+        public UsuarioAlterarSenhaResponse RecuperarSenha(UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest)
+        {
+            UsuarioAlterarSenhaResponse result = identityServico.RecuperarSenha(usuarioAlterarSenhaRequest).Result;
+            return result;
+        }
+
+        public UsuarioRedefinirResponse RedefinirSenha(UsuarioRedefinirRequest usuarioRedefinirRequest)
+        {
+            UsuarioRedefinirResponse result = identityServico.RedefinirSenha(usuarioRedefinirRequest).Result;
+            return result;
+        }
     }
 }

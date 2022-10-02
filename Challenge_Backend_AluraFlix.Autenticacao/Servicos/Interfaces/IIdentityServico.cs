@@ -10,9 +10,11 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos.Interfaces
 {
     public interface IIdentityServico
     {
+        Task<UsuarioAtivarResponse> Ativar(UsuarioAtivarRequest usuarioAtivarRequest);
         Task<UsuarioCadastroResponse> CadastrarUsuario(UsuarioCadastroRequest usuarioCadastro);
         Task<UsuarioLoginResponse> Login(UsuarioLoginRequest usuarioLoginRequest);
         UsuarioLogoutResponse Logout();
-        Task<UsuarioAtivarResponse> Ativar(UsuarioAtivarRequest usuarioAtivarRequest);
+        Task<UsuarioAlterarSenhaResponse> RecuperarSenha(UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest);
+        Task<UsuarioRedefinirResponse> RedefinirSenha(UsuarioRedefinirRequest usuarioRedefinirRequest);
     }
 }

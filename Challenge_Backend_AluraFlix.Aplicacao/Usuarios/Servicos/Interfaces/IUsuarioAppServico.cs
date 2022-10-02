@@ -10,9 +10,12 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces
 {
     public interface IUsuarioAppServico
     {
+        UsuarioAtivarResponse Ativar(UsuarioAtivarRequest ativarRequest);
         UsuarioCadastroResponse Cadastrar(UsuarioCadastroRequest cadastroRequest);
         UsuarioLoginResponse Login(UsuarioLoginRequest loginRequest);
         UsuarioLogoutResponse Logout();
-        UsuarioAtivarResponse Ativar(UsuarioAtivarRequest ativarRequest);
+        UsuarioAlterarSenhaResponse RecuperarSenha(UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest);
+        UsuarioRedefinirResponse RedefinirSenha(UsuarioRedefinirRequest usuarioRedefinirRequest);
+
     }
 }

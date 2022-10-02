@@ -20,7 +20,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
         }
 
         [HttpPost("cadastrar")]
-        public ActionResult<UsuarioCadastroResponse> Cadastrar(UsuarioCadastroRequest usuarioCadastro)
+        public ActionResult<UsuarioCadastroResponse> Cadastrar([FromBody] UsuarioCadastroRequest usuarioCadastro)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -32,7 +32,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
         }
 
         [HttpPost("login")]
-        public ActionResult<UsuarioLoginResponse> Login(UsuarioLoginRequest usuarioLogin)
+        public ActionResult<UsuarioLoginResponse> Login([FromBody] UsuarioLoginRequest usuarioLogin)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -47,6 +47,20 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
         public ActionResult<UsuarioAtivarResponse> ConfirmarEmail([FromQuery] UsuarioAtivarRequest usuarioAtivar)
         {
             var retorno = usuarioAppServico.Ativar(usuarioAtivar);
+            return Ok(retorno);
+        }
+
+        [HttpPost("recuperar")]
+        public ActionResult<UsuarioAlterarSenhaResponse> RecuperarSenha([FromBody] UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest)
+        {
+            var retorno = usuarioAppServico.RecuperarSenha(usuarioAlterarSenhaRequest);
+            return Ok(retorno);
+        }
+
+        [HttpPost("redefinir")]
+        public ActionResult<UsuarioRedefinirResponse> RedefinirSenha([FromBody] UsuarioRedefinirRequest usuarioRedefinirRequest)
+        {
+            var retorno = usuarioAppServico.RedefinirSenha(usuarioRedefinirRequest);
             return Ok(retorno);
         }
 
