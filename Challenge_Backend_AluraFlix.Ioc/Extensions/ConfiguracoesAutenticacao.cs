@@ -71,6 +71,8 @@ namespace Challenge_Backend_AluraFlix.Ioc.Extensions
             {
                 options.TokenValidationParameters = tokenValidationParameters;
             });
+
+            services.ConfiguraCors();
         }
     }
 }
