@@ -9,6 +9,8 @@ namespace Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses
     public class UsuarioCadastroResponse
     {
         public bool Sucesso { get; set; }
+        public string IdUsuario { get; set; }
+        public string TokenEmail { get; set; }
         public List<string> Erros { get; set; }
 
         public UsuarioCadastroResponse() =>

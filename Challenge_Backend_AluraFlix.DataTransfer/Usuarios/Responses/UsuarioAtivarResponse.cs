@@ -2,36 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses
 {
-    public class UsuarioLoginResponse
+    public class UsuarioAtivarResponse
     {
         public bool Sucesso { get; private set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Token { get; private set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public DateTime? DataExpiracao { get; private set; }
         public List<string> Erros { get; private set; }
 
-        public UsuarioLoginResponse()
+        public UsuarioAtivarResponse()
         {
             Erros = new List<string>();
         }
 
-        public UsuarioLoginResponse(bool sucesso = true) : this()
+        public UsuarioAtivarResponse(bool sucesso = true) : this()
         {
             Sucesso = sucesso;
-        }
-
-        public UsuarioLoginResponse(bool sucesso, string token, DateTime dataExpiracao) : this(sucesso)
-        {
-            Token = token;
-            DataExpiracao = dataExpiracao;
         }
 
         public void AdicionarErro(string erro)

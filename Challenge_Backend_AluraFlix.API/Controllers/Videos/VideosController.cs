@@ -25,7 +25,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
         public ActionResult<VideoIdResponse> Inserir([FromBody] VideoInserirRequest inserirRequest)
         {
             var retorno = videosAppServico.Inserir(inserirRequest);
-            return Ok(retorno);
+            return Created($"/api/videos/{retorno.IdVideo}",retorno);
         }
 
         [HttpGet("search")]
