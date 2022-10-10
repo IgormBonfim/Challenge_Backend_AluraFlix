@@ -1,7 +1,10 @@
-﻿using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces;
+﻿using AutoMapper;
+using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Autenticacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +13,19 @@ using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos
 {
-    public class UsuarioAppServico : IUsuarioAppServico
+    public class UsuariosAppServico : IUsuariosAppServico
     {
         private readonly IIdentityServico identityServico;
+        private readonly IUsuariosServico usuariosServico;
         private readonly IEmailServico emailServico;
+        private readonly IMapper mapper;
 
-        public UsuarioAppServico(IIdentityServico identityServico, IEmailServico emailServico)
+        public UsuariosAppServico(IIdentityServico identityServico, IUsuariosServico usuariosServico, IEmailServico emailServico, IMapper mapper)
         {
             this.identityServico = identityServico;
+            this.usuariosServico = usuariosServico;
             this.emailServico = emailServico;
+            this.mapper = mapper;
         }
         public UsuarioAtivarResponse Ativar(UsuarioAtivarRequest ativarRequest)
         {
@@ -48,6 +55,12 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos
             return identityServico.Logout();
         }
 
+        public UsuarioResponse Recuperar(string id)
+        {
+            Usuario usuario = usuariosServico.Validar(id);
+            return mapper.Map<UsuarioResponse>(usuario);
+        }
+
         public UsuarioAlterarSenhaResponse RecuperarSenha(UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest)
         {
             UsuarioAlterarSenhaResponse result = identityServico.RecuperarSenha(usuarioAlterarSenhaRequest).Result;
@@ -59,5 +72,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos
             UsuarioRedefinirResponse result = identityServico.RedefinirSenha(usuarioRedefinirRequest).Result;
             return result;
         }
+
+
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces
 {
-    public interface IUsuarioAppServico
+    public interface IUsuariosAppServico
     {
         UsuarioAtivarResponse Ativar(UsuarioAtivarRequest ativarRequest);
         UsuarioCadastroResponse Cadastrar(UsuarioCadastroRequest cadastroRequest);
@@ -16,6 +16,6 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces
         UsuarioLogoutResponse Logout();
         UsuarioAlterarSenhaResponse RecuperarSenha(UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest);
         UsuarioRedefinirResponse RedefinirSenha(UsuarioRedefinirRequest usuarioRedefinirRequest);
-
+        UsuarioResponse Recuperar(string id);
     }
 }

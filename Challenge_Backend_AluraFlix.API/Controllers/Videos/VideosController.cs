@@ -51,6 +51,14 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
             return Ok(retorno);
         }
 
+        [HttpGet("favoritos")]
+        public ActionResult<IList<VideoResponse>> RecuperarFavoritos()
+        {
+            string id = HttpContext.User.FindFirst("idUsuario").Value;
+            var result = videosAppServico.Favoritos(id);
+            return Ok(result);
+        }
+
 
         [HttpPut("{id}")]
         public ActionResult Editar(int id, [FromBody] VideoEditarRequest editarRequest)

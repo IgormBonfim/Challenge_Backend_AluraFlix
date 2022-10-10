@@ -8,7 +8,7 @@ namespace Challenge_Backend_AluraFlix.DataTransfer.Genericos.Requests
 {
     public class PaginacaoRequest
     {
-        public int? Pagina { get; set; }
-        public int? Limite { get; set; }
+        public int Pagina { get; set; } = 1;
+        public int Quantidade { get; set; } = 5;
     }
 }

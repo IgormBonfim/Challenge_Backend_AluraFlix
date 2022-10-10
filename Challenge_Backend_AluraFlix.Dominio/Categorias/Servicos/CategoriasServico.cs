@@ -40,7 +40,9 @@ namespace Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos
 
         public Categoria Inserir(Categoria inserir)
         {
-            return categoriasRepositorio.Inserir(inserir);
+            int idCategoria = categoriasRepositorio.Inserir(inserir);
+            inserir.SetIdCategoria(idCategoria);
+            return inserir;
         }
 
         public Categoria Instanciar(string? titulo, string? cor)

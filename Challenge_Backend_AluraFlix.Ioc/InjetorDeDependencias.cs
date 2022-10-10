@@ -3,8 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos.Interfaces;
-using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos;
-using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Profiles;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
@@ -30,6 +28,10 @@ using MailKit.Net.Smtp;
 using Challenge_Backend_AluraFlix.Autenticacao.Configuracoes;
 using Challenge_Backend_AluraFlix.Autenticacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Repositorios;
+using Challenge_Backend_AluraFlix.Infra.Usuarios;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
 
 namespace Challenge_Backend_AluraFlix.Ioc
 {
@@ -65,21 +67,22 @@ namespace Challenge_Backend_AluraFlix.Ioc
 
             services.AddAutoMapper(typeof(VideosProfile));
 
-            services.AddSingleton<IVideosRepositorio, VideosRepositorio>();
-            services.AddSingleton<IVideosServico, VideosServico>();
-            services.AddSingleton<IVideosAppServico, VideosAppServico>();
+            services.AddScoped<IVideosRepositorio, VideosRepositorio>();
+            services.AddScoped<IVideosServico, VideosServico>();
+            services.AddScoped<IVideosAppServico, VideosAppServico>();
             
-            services.AddSingleton<ICategoriasRepositorio, CategoriasRepositorio>();
-            services.AddSingleton<ICategoriasServico, CategoriasServico>();
-            services.AddSingleton<ICategoriasAppServico, CategoriasAppServico>();
-            services.AddSingleton<IPaginacaoAppServico, PaginacaoAppServico>();
+            services.AddScoped<ICategoriasRepositorio, CategoriasRepositorio>();
+            services.AddScoped<ICategoriasServico, CategoriasServico>();
+            services.AddScoped<ICategoriasAppServico, CategoriasAppServico>();
 
-            services.AddScoped<IUsuarioAppServico, UsuarioAppServico>();
+            services.AddScoped<IUsuariosRepositorio, UsuariosRepositorio>();
+            services.AddScoped<IUsuariosServico, UsuariosServico>();
+            services.AddScoped<IUsuariosAppServico, UsuariosAppServico>();
             services.AddScoped<IEmailServico, EmailServico>();
             services.AddScoped<ISmtpClient, SmtpClient>();
             services.AddScoped<IIdentityServico, IdentityServico>();
 
-            services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
+            services.AddScoped<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
 
         }
     }

@@ -12,9 +12,9 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly IUsuarioAppServico usuarioAppServico;
+        private readonly IUsuariosAppServico usuarioAppServico;
 
-        public UsuariosController(IUsuarioAppServico usuarioAppServico)
+        public UsuariosController(IUsuariosAppServico usuarioAppServico)
         {
             this.usuarioAppServico = usuarioAppServico;
         }
@@ -68,6 +68,13 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
         public ActionResult Logout()
         {
             var retorno = usuarioAppServico.Logout();
+            return Ok(retorno);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<UsuarioResponse> Recuperar(string id)
+        {
+            var retorno = usuarioAppServico.Recuperar(id);
             return Ok(retorno);
         }
     }
