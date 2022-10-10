@@ -9,9 +9,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Genericos.Repositorios
     public interface IGenericosRepositorio<T> where T : class
     {
         T Recuperar(int id);
-        T Inserir(T inserir);
+        T Recuperar(string id);
+        int Inserir(T inserir);
         T Editar(T editar);
         void Deletar(T deletar);
         IQueryable<T> Query();
+        IList<T> Listar(IQueryable<T> query, int qt, int pagina);
     }
 }

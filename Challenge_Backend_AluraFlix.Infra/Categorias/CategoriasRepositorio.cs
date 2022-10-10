@@ -1,5 +1,7 @@
 ﻿using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Repositorios;
+using Challenge_Backend_AluraFlix.Dominio.Genericos.Repositorios;
+using Challenge_Backend_AluraFlix.Infra.Genericos;
 using NHibernate;
 using System;
 using System.Collections.Generic;
@@ -9,41 +11,8 @@ using System.Threading.Tasks;
 
 namespace Challenge_Backend_AluraFlix.Infra.Categorias
 {
-    public class CategoriasRepositorio : ICategoriasRepositorio
+    public class CategoriasRepositorio : GenericosRepositorio<Categoria>, ICategoriasRepositorio
     {
-        private readonly ISession session;
-
-        public CategoriasRepositorio(ISession session)
-        {
-            this.session = session;
-        }
-        
-        public void Deletar(Categoria deletar)
-        {
-            session.Delete(deletar);
-        }
-
-        public Categoria Editar(Categoria editar)
-        {
-            session.Update(editar);
-            return editar;
-        }
-
-        public Categoria Inserir(Categoria inserir)
-        {
-            int id = (int)session.Save(inserir);
-            inserir.SetIdCategoria(id);
-            return inserir;
-        }
-
-        public IQueryable<Categoria> Query()
-        {
-            return session.Query<Categoria>();
-        }
-
-        public Categoria Recuperar(int id)
-        {
-            return session.Get<Categoria>(id);
-        }
+        public CategoriasRepositorio(ISession session) : base(session) { }
     }
 }

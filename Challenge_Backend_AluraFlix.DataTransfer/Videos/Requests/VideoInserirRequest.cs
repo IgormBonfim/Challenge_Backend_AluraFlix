@@ -8,9 +8,10 @@ namespace Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests
 {
     public class VideoInserirRequest
     {
-        public string? TituloVideo { get; set; }
+        public string TituloVideo { get; set; }
         public string? DescVideo { get; set; }
-        public string? UrlVideo { get; set; }
-        public int? CategoriaId { get; set; }
+        public string UrlVideo { get; set; }
+        public string ImgVideo { get; set; }
+        public int? IdCategoria { get; set; }
     }
 }

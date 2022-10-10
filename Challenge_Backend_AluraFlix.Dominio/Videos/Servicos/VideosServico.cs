@@ -44,6 +44,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
             if (videoEditar.TituloVideo != video.TituloVideo && video.TituloVideo != null) videoEditar.SetTituloVideo(video.TituloVideo);
             if (videoEditar.DescVideo != video.DescVideo && video.DescVideo != null) videoEditar.SetDescVideo(video.DescVideo);
             if (videoEditar.UrlVideo != video.UrlVideo && video.UrlVideo != null) videoEditar.SetUrlVideo(video.UrlVideo);
+            if (videoEditar.ImgVideo != video.ImgVideo && video.ImgVideo != null) videoEditar.SetImgVideo(video.ImgVideo);
             if (videoEditar.CategoriaVideo != video.CategoriaVideo && video.CategoriaVideo != null) videoEditar.SetCategoriaVideo(video.CategoriaVideo);
 
             return videosRepositorio.Editar(videoEditar);
@@ -51,16 +52,18 @@ namespace Challenge_Backend_AluraFlix.Dominio.Videos.Servicos
 
         public Video Inserir(Video video)
         {
-            return videosRepositorio.Inserir(video);
+            int idvideo = videosRepositorio.Inserir(video);
+            video.SetIdVideo(idvideo);
+            return video;
         }
 
-        public Video Instanciar(string? titulo, string? desc, string? url, int? idCategoria)
+        public Video Instanciar(string? titulo, string? desc, string? url, string? img, int? idCategoria)
         {
             if (!idCategoria.HasValue) idCategoria = 1;
 
             Categoria categoria = categoriasServico.Validar(idCategoria.Value);
 
-            return new Video(titulo, desc, url, categoria);
+            return new Video(titulo, desc, url, img, categoria);
         }
 
         public IQueryable<Video> Query()

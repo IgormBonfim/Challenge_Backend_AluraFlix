@@ -17,7 +17,14 @@ namespace Challenge_Backend_AluraFlix.Infra.Videos.Mapeamentos
             Map(x => x.TituloVideo).Column("tituloVideo");
             Map(x => x.DescVideo).Column("descVideo");
             Map(x => x.UrlVideo).Column("urlVideo");
+            Map(x => x.ImgVideo).Column("imgVideo");
             References(x => x.CategoriaVideo).Column("idCategoria");
+            HasManyToMany(x => x.Usuarios)
+            .Table("favoritos")
+            .ParentKeyColumn("IdVideo")
+            .ChildKeyColumn("IdUsuario")
+            .LazyLoad()
+            .Cascade.SaveUpdate();
         }
     }
 }

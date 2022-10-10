@@ -13,6 +13,7 @@ namespace Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses
         public string TituloVideo { get; set; }
         public string? DescVideo { get; set; }
         public string UrlVideo { get; set; }
+        public string ImgVideo { get; set; }
         public CategoriaResponse CategoriaVideo { get; set; }
     }
 }

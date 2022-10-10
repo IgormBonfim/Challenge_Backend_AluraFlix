@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
-using Challenge_Backend_AluraFlix.Aplicacao.Paginacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using NHibernate;
 using System;
@@ -19,44 +21,44 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
     public class VideosAppServico : IVideosAppServico
     {
         private readonly IVideosServico videosServico;
+        private readonly IUsuariosServico usuariosServico;
+        private readonly IVideosRepositorio videosRepositorio;
         private readonly ISession session;
         private readonly IMapper mapper;
-        private readonly IPaginacaoAppServico paginacaoAppServico;
 
-        public VideosAppServico(IVideosServico videosServico, ISession session, IMapper mapper, IPaginacaoAppServico paginacaoAppServico)
+        public VideosAppServico(IVideosServico videosServico, IUsuariosServico usuariosServico, IVideosRepositorio videosRepositorio, ISession session, IMapper mapper)
         {
             this.videosServico = videosServico;
+            this.usuariosServico = usuariosServico;
+            this.videosRepositorio = videosRepositorio;
             this.session = session;
             this.mapper = mapper;
-            this.paginacaoAppServico = paginacaoAppServico;
         }
 
         public IList<VideoResponse> Buscar(VideoBuscarRequest busca)
         {
             try
             {
-                var paginacao = paginacaoAppServico.Paginar(busca);
-
-                var videoQuery = videosServico.Query();
+                var query = videosRepositorio.Query();
 
                 if (busca.TituloVideo != null)
                 {
-                    videoQuery = videoQuery.Where(x => x.TituloVideo.Contains(busca.TituloVideo));
+                    query = query.Where(x => x.TituloVideo.Contains(busca.TituloVideo));
                 }
                 if (busca.DescVideo != null)
                 {
-                    videoQuery = videoQuery.Where(x => x.DescVideo.Contains(busca.DescVideo));
+                    query = query.Where(x => x.DescVideo.Contains(busca.DescVideo));
                 }
                 if (busca.UrlVideo != null)
                 {
-                    videoQuery = videoQuery.Where(x => x.UrlVideo.Contains(busca.UrlVideo));
+                    query = query.Where(x => x.UrlVideo.Contains(busca.UrlVideo));
                 }
                 if (busca.CategoriaId != null)
                 {
-                    videoQuery = videoQuery.Where(x => x.CategoriaVideo.IdCategoria == busca.CategoriaId);
+                    query = query.Where(x => x.CategoriaVideo.IdCategoria == busca.CategoriaId);
                 }
 
-                IList<Video> videoList = videosServico.Buscar(videoQuery, paginacao.Limit, paginacao.Offset);
+                IList<Video> videoList = videosRepositorio.Listar(query, busca.Quantidade, busca.Pagina);
                 return mapper.Map<IList<VideoResponse>>(videoList);
             }
             catch (Exception e)
@@ -96,7 +98,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
             try
             {
                 editarRequest = editarRequest ?? new VideoEditarRequest();
-                Video videoEditar = videosServico.Instanciar(editarRequest.TituloVideo, editarRequest.DescVideo, editarRequest.UrlVideo, editarRequest.Categoria);
+                Video videoEditar = videosServico.Instanciar(editarRequest.TituloVideo, editarRequest.DescVideo, editarRequest.UrlVideo, editarRequest.ImgVideo, editarRequest.Categoria);
                 videoEditar.SetIdVideo(editarRequest.IdVideo.Value);
 
                 videosServico.Editar(videoEditar);
@@ -113,13 +115,28 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
 
         }
 
+        public IList<VideoResponse> Favoritos(string idUsuario)
+        {
+            try
+            {
+                Console.WriteLine(idUsuario);
+                Usuario usuario = usuariosServico.Validar(idUsuario);
+                IList<Video> videos = usuario.Videos;
+                return mapper.Map<IList<VideoResponse>>(videos);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public VideoIdResponse Inserir(VideoInserirRequest inserirRequest)
         {
             ITransaction transacao = session.BeginTransaction();
 
             try
             {
-                Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo, inserirRequest.CategoriaId);
+                Video videoInserir = videosServico.Instanciar(inserirRequest.TituloVideo, inserirRequest.DescVideo, inserirRequest.UrlVideo, inserirRequest.ImgVideo, inserirRequest.IdCategoria);
 
                 videoInserir = videosServico.Inserir(videoInserir);
                 if (transacao.IsActive)

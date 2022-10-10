@@ -7,6 +7,7 @@ using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Categorias.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
@@ -22,13 +23,15 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos
     public class CategoriasAppServico : ICategoriasAppServico
     {
         private readonly ICategoriasServico categoriasServico;
+        private readonly ICategoriasRepositorio categoriasRepositorio;
         private readonly IVideosAppServico videosAppServico;
         private readonly ISession session;
         private readonly IMapper mapper;
 
-        public CategoriasAppServico(ICategoriasServico categoriasServico, IVideosAppServico videosAppServico, ISession session, IMapper mapper)
+        public CategoriasAppServico(ICategoriasServico categoriasServico, ICategoriasRepositorio categoriasRepositorio, IVideosAppServico videosAppServico, ISession session, IMapper mapper)
         {
             this.categoriasServico = categoriasServico;
+            this.categoriasRepositorio = categoriasRepositorio;
             this.videosAppServico = videosAppServico;
             this.session = session;
             this.mapper = mapper;
@@ -49,8 +52,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos
                     query = query.Where(x => x.CorCategoria == buscarRequest.CorCategoria);
                 }
 
-                IList<Categoria> categoriasList = categoriasServico.Buscar(query);
-
+                IList<Categoria> categoriasList = categoriasRepositorio.Listar(query, buscarRequest.Quantidade, buscarRequest.Pagina);
                 return mapper.Map<IList<CategoriaResponse>>(categoriasList);
             }
             catch (Exception e)
