@@ -64,6 +64,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
             return Ok(retorno);
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public ActionResult Logout()
         {
@@ -71,9 +72,11 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
             return Ok(retorno);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<UsuarioResponse> Recuperar(string id)
+        [Authorize]
+        [HttpGet("{logado}")]
+        public ActionResult<UsuarioResponse> Recuperar()
         {
+            string id = HttpContext.User.FindFirst("idUsuario").Value;
             var retorno = usuarioAppServico.Recuperar(id);
             return Ok(retorno);
         }
