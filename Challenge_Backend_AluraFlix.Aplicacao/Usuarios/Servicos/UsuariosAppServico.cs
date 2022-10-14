@@ -37,9 +37,21 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos
             UsuarioCadastroResponse usuarioCadastroResponse = identityServico.CadastrarUsuario(cadastroRequest).Result;
             if (usuarioCadastroResponse.Sucesso)
             {
-                var mensagem = emailServico.CriarMensagem(new[] { cadastroRequest.Email }, "Ative sua conta - AluraFlix", usuarioCadastroResponse.IdUsuario, usuarioCadastroResponse.TokenEmail);
-                var corpoEmail = emailServico.CriaCorpoEmail(mensagem);
-                emailServico.EnviarEmail(corpoEmail);
+                try
+                {
+                    var mensagem = emailServico.CriarMensagem(new[] { cadastroRequest.Email }, "Ative sua conta - AluraFlix", usuarioCadastroResponse.IdUsuario, usuarioCadastroResponse.TokenEmail);
+                    var corpoEmail = emailServico.CriaCorpoEmail(mensagem);
+                    emailServico.EnviarEmail(corpoEmail);
+                }
+                catch
+                {
+                    var ativarEmail = new UsuarioAtivarRequest()
+                    {
+                        IdUsuario = usuarioCadastroResponse.IdUsuario,
+                        TokenAtivacao = usuarioCadastroResponse.TokenEmail,
+                    };
+                    identityServico.Ativar(ativarEmail);
+                }
             }
 
             return usuarioCadastroResponse;
