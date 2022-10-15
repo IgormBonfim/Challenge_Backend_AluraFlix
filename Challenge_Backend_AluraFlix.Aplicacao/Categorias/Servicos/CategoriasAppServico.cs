@@ -9,6 +9,7 @@ using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Repositorios;
 using Challenge_Backend_AluraFlix.Dominio.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Dominio.Genericos.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
 using NHibernate;
@@ -37,7 +38,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos
             this.mapper = mapper;
         }
 
-        public IList<CategoriaResponse> Buscar(CategoriaBuscarRequest buscarRequest)
+        public ListaPaginadaResponse<CategoriaResponse> Buscar(CategoriaBuscarRequest buscarRequest)
         {
             try
             {
@@ -52,8 +53,8 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos
                     query = query.Where(x => x.CorCategoria == buscarRequest.CorCategoria);
                 }
 
-                IList<Categoria> categoriasList = categoriasRepositorio.Listar(query, buscarRequest.Quantidade, buscarRequest.Pagina);
-                return mapper.Map<IList<CategoriaResponse>>(categoriasList);
+                ListaPaginada<Categoria> categoriasList = categoriasRepositorio.Listar(query, buscarRequest.Quantidade, buscarRequest.Pagina);
+                return mapper.Map<ListaPaginadaResponse<CategoriaResponse>>(categoriasList);
             }
             catch (Exception e)
             {
@@ -126,7 +127,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos
             }
         }
 
-        public IList<VideoResponse> ListarPorCategoria(int id)
+        public ListaPaginadaResponse<VideoResponse> ListarPorCategoria(int id)
         {
             try
             {

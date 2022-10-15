@@ -15,7 +15,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces
         Object Recuperar(int idVideo);
         VideoResponse Editar(VideoEditarRequest editarRequest);
         MensagemResponse Deletar(int idVideo);
-        IList<VideoResponse> Buscar(VideoBuscarRequest busca);
+        ListaPaginadaResponse<VideoResponse> Buscar(VideoBuscarRequest busca);
         IList<VideoResponse> Favoritos(string idUsuario);
     }
 }

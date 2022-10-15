@@ -10,5 +10,6 @@ namespace Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces
     public interface IUsuariosServico
     {
         Usuario Validar(string id);
+        Usuario Editar(Usuario usuario);
     }
 }

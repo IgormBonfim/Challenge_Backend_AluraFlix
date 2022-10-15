@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Challenge_Backend_AluraFlix.Dominio.Genericos.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,6 @@ namespace Challenge_Backend_AluraFlix.Dominio.Genericos.Repositorios
         T Editar(T editar);
         void Deletar(T deletar);
         IQueryable<T> Query();
-        IList<T> Listar(IQueryable<T> query, int qt, int pagina);
+        ListaPaginada<T> Listar(IQueryable<T> query, int qt, int pagina);
     }
 }

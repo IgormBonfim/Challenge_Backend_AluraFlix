@@ -4,6 +4,7 @@ using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
+using Challenge_Backend_AluraFlix.Dominio.Genericos.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Usuarios.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
@@ -35,7 +36,7 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
             this.mapper = mapper;
         }
 
-        public IList<VideoResponse> Buscar(VideoBuscarRequest busca)
+        public ListaPaginadaResponse<VideoResponse> Buscar(VideoBuscarRequest busca)
         {
             try
             {
@@ -58,8 +59,16 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos
                     query = query.Where(x => x.CategoriaVideo.IdCategoria == busca.CategoriaId);
                 }
 
-                IList<Video> videoList = videosRepositorio.Listar(query, busca.Quantidade, busca.Pagina);
-                return mapper.Map<IList<VideoResponse>>(videoList);
+                ListaPaginada<Video> videoList = videosRepositorio.Listar(query, busca.Quantidade, busca.Pagina);
+
+                return mapper.Map<ListaPaginadaResponse<VideoResponse>>(videoList);
+
+                return new ListaPaginadaResponse<VideoResponse>()
+                {
+                    Pagina = busca.Pagina,
+                    Quantidade = busca.Quantidade,
+                    Lista = mapper.Map<IList<VideoResponse>>(videoList)
+                };
             }
             catch (Exception e)
             {

@@ -18,6 +18,11 @@ namespace Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos
             this.usuariosRepositorio = usuariosRepositorio;
         }
 
+        public Usuario Editar(Usuario usuario)
+        {
+            return usuariosRepositorio.Editar(usuario);
+        }
+
         public Usuario Validar(string id)
         {
             Usuario usuario = usuariosRepositorio.Recuperar(id);

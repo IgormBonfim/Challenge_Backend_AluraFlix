@@ -1,4 +1,5 @@
-﻿using Challenge_Backend_AluraFlix.Dominio.Genericos.Repositorios;
+﻿using Challenge_Backend_AluraFlix.Dominio.Genericos.Entidades;
+using Challenge_Backend_AluraFlix.Dominio.Genericos.Repositorios;
 using NHibernate;
 using System;
 using System.Collections.Generic;
@@ -34,10 +35,21 @@ namespace Challenge_Backend_AluraFlix.Infra.Genericos
             return id;
         }
 
-        public IList<T> Listar(IQueryable<T> query, int qt, int pagina)
+        public ListaPaginada<T> Listar(IQueryable<T> query, int qt, int pagina)
         {
             int offset = (pagina * qt) - qt;
-            return query.Take(qt).Skip(offset).ToList();
+            IList<T> lista = query.Take(qt).Skip(offset).ToList();
+
+            double totalVideos = query.Count();
+            int totalPaginas = (int)Math.Ceiling(totalVideos / qt);
+
+            return new ListaPaginada<T>()
+            {
+                Pagina = pagina,
+                Quantidade = qt,
+                TotalPaginas = totalPaginas,
+                Lista = lista
+            };
         }
 
         public IQueryable<T> Query()

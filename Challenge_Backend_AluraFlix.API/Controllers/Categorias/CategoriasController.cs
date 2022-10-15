@@ -36,7 +36,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
         }
 
         [HttpGet("{id}/videos")]
-        public ActionResult<List<VideoResponse>> VideosPorCategoria(int id)
+        public ActionResult<ListaPaginadaResponse<VideoResponse>> VideosPorCategoria(int id)
         {
             var retorno = categoriasAppServico.ListarPorCategoria(id);
             return Ok(retorno);
