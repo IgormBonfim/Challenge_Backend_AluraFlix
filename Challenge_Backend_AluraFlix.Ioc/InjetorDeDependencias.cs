@@ -36,6 +36,8 @@ using Challenge_Backend_AluraFlix.Aplicacao.Favoritos.Servicos;
 using Challenge_Backend_AluraFlix.Aplicacao.Favoritos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Favoritos.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Favoritos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Genericos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Genericos.Servicos;
 
 namespace Challenge_Backend_AluraFlix.Ioc
 {
@@ -82,6 +84,7 @@ namespace Challenge_Backend_AluraFlix.Ioc
             services.AddScoped<ICategoriasServico, CategoriasServico>();
             services.AddScoped<ICategoriasAppServico, CategoriasAppServico>();
 
+            services.AddScoped<IUsuario, Usuario>();
             services.AddScoped<IUsuariosRepositorio, UsuariosRepositorio>();
             services.AddScoped<IUsuariosServico, UsuariosServico>();
             services.AddScoped<IUsuariosAppServico, UsuariosAppServico>();
