@@ -1,7 +1,9 @@
 ﻿using Challenge_Backend_AluraFlix.Aplicacao.Categorias.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Categorias.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
+using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +17,12 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
     public class CategoriasController : ControllerBase
     {
         private readonly ICategoriasAppServico categoriasAppServico;
+        private readonly IVideosAppServico videosAppServico;
 
-        public CategoriasController(ICategoriasAppServico categoriasAppServico)
+        public CategoriasController(ICategoriasAppServico categoriasAppServico, IVideosAppServico videosAppServico)
         {
             this.categoriasAppServico = categoriasAppServico;
+            this.videosAppServico = videosAppServico;
         }
 
         [HttpGet]
@@ -36,9 +40,10 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Categorias
         }
 
         [HttpGet("{id}/videos")]
-        public ActionResult<ListaPaginadaResponse<VideoResponse>> VideosPorCategoria(int id)
+        public ActionResult<ListaPaginadaResponse<VideoResponse>> VideosPorCategoria(int id, [FromQuery] VideoBuscarRequest videoBuscarRequest)
         {
-            var retorno = categoriasAppServico.ListarPorCategoria(id);
+            videoBuscarRequest.CategoriaId = id;
+            var retorno = videosAppServico.Buscar(videoBuscarRequest);
             return Ok(retorno);
         }
 
