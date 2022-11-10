@@ -2,31 +2,45 @@
 using Challenge_Backend_AluraFlix.Dominio.Usuarios.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Dominio.Videos.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Challenge_Backend_AluraFlix.Dominio.Videos.Servicos.Interfaces;
+
 
 namespace Challenge_Backend_AluraFlix.Dominio.Favoritos.Servicos
 {
     public class FavoritosServico : IFavoritosServico
     {
-        private readonly IUsuariosServico usuarioServico;
+        private readonly IUsuariosServico usuariosServico;
+        private readonly IVideosServico videosServico;
 
-        public FavoritosServico(IUsuariosServico usuarioServico)
+        public FavoritosServico(IUsuariosServico usuariosServico, IVideosServico videosServico)
         {
-            this.usuarioServico = usuarioServico;
+            this.usuariosServico = usuariosServico;
+            this.videosServico = videosServico;
         }
-        public Video AdicionarFavorito(Usuario usuario, Video video)
+        public Video AdicionarFavorito(string idUsuario, int idVideo)
         {
+            Video video = videosServico.Validar(idVideo);
+
+            Usuario usuario = usuariosServico.Validar(idUsuario);
+
             foreach(var videoFavorito in usuario.Videos)
             {
                 if (video.IdVideo == videoFavorito.IdVideo)
                     throw new Exception("Esse vídeo já está em seus favoritos");
             }
             usuario.Videos.Add(video);
-            usuarioServico.Editar(usuario);
+            usuariosServico.Editar(usuario);
+            return video;
+        }
+
+        public Video Remover(string idUsuario, int idVideo)
+        {
+            Video video = videosServico.Validar(idVideo);
+
+            Usuario usuario = usuariosServico.Validar(idUsuario);
+
+            usuario.Videos.Remove(video);
+            usuariosServico.Editar(usuario);
             return video;
         }
     }

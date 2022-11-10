@@ -10,6 +10,7 @@ namespace Challenge_Backend_AluraFlix.Dominio.Favoritos.Servicos.Interfaces
 {
     public interface IFavoritosServico
     {
-        Video AdicionarFavorito(Usuario usuario, Video video);
+        Video AdicionarFavorito(string idUsuario, int idVideo);
+        Video Remover(string idUsuario, int idVideo);
     }
 }

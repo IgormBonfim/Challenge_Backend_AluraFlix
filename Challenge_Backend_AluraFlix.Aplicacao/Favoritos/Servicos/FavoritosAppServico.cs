@@ -19,16 +19,12 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Favoritos.Servicos
     public class FavoritosAppServico : IFavoritosAppServico
     {
         private readonly ISession session;
-        private readonly IUsuariosServico usuariosServico;
-        private readonly IVideosServico videosServico;
         private readonly IFavoritosServico favoritosServico;
         private readonly IMapper mapper;
 
-        public FavoritosAppServico(ISession session, IUsuariosServico usuariosServico, IVideosServico videosServico, IFavoritosServico favoritosServico, IMapper mapper)
+        public FavoritosAppServico(ISession session, IFavoritosServico favoritosServico, IMapper mapper)
         {
             this.session = session;
-            this.usuariosServico = usuariosServico;
-            this.videosServico = videosServico;
             this.favoritosServico = favoritosServico;
             this.mapper = mapper;
         }
@@ -38,14 +34,31 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Favoritos.Servicos
 
             try
             {
-                Usuario usuario = usuariosServico.Validar(favoritoInserirRequest.IdUsuario);
-                Video video = videosServico.Validar(favoritoInserirRequest.IdVideo);
-
-                Video videoFavoritado = favoritosServico.AdicionarFavorito(usuario, video);
+                Video videoFavoritado = favoritosServico.AdicionarFavorito(favoritoInserirRequest.IdUsuario, favoritoInserirRequest.IdVideo);
 
                 if (transacao.IsActive)
                     transacao.Commit();
                 return mapper.Map<VideoResponse>(videoFavoritado);
+            }
+            catch
+            {
+                if (transacao.IsActive)
+                    transacao.Rollback();
+                throw;
+            }
+        }
+
+        public VideoResponse RemoverFavorito(FavoritoRemoverRequest favoritoRemoverRequest)
+        {
+            ITransaction transacao = session.BeginTransaction();
+
+            try
+            {
+                Video videoRemovido = favoritosServico.Remover(favoritoRemoverRequest.IdUsuario, favoritoRemoverRequest.IdVideo);
+
+                if (transacao.IsActive)
+                    transacao.Commit();
+                return mapper.Map<VideoResponse>(videoRemovido);
             }
             catch
             {

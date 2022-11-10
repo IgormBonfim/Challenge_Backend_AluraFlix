@@ -11,5 +11,6 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Favoritos.Servicos.Interfaces
     public interface IFavoritosAppServico
     {
         VideoResponse AdicionarFavorito(FavoritoInserirRequest favoritoInserirRequest);
+        VideoResponse RemoverFavorito(FavoritoRemoverRequest favoritoRemoverRequest);
     }
 }

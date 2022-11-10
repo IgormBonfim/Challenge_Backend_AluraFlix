@@ -6,6 +6,7 @@ using Challenge_Backend_AluraFlix.Dominio.Genericos.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Challenge_Backend_AluraFlix.API.Controllers.Favoritos
 {
@@ -26,9 +27,18 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Favoritos
         [HttpPost]
         public ActionResult<VideoResponse> AdicionarFavorito([FromBody] FavoritoInserirRequest favoritoInserirRequest)
         {
-            favoritoInserirRequest.IdUsuario = usuario.UsuarioLogado(HttpContext);
+            favoritoInserirRequest.IdUsuario = usuario.UsuarioLogado(User); 
 
             var retorno = favoritosAppServico.AdicionarFavorito(favoritoInserirRequest);
+            return Ok(retorno);
+        }
+
+        [HttpPost]
+        public ActionResult<VideoResponse> RemoverFavorito([FromBody] FavoritoRemoverRequest favoritoRemoverRequest)
+        {
+            favoritoRemoverRequest.IdUsuario = usuario.UsuarioLogado(User);
+
+            var retorno = favoritosAppServico.RemoverFavorito(favoritoRemoverRequest);
             return Ok(retorno);
         }
 

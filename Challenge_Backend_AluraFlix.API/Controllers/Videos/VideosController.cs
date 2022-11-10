@@ -1,4 +1,5 @@
-﻿using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
+﻿using Challenge_Backend_AluraFlix.Aplicacao.Genericos.Servicos.Interfaces;
+using Challenge_Backend_AluraFlix.Aplicacao.Videos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Genericos.Responses;
 using Challenge_Backend_AluraFlix.DataTransfer.Videos.Requests;
@@ -15,10 +16,12 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
     public class VideosController : ControllerBase
     {
         private readonly IVideosAppServico videosAppServico;
+        private readonly IUsuario usuario;
 
-        public VideosController(IVideosAppServico videosAppServico)
+        public VideosController(IVideosAppServico videosAppServico, IUsuario usuario)
         {
             this.videosAppServico = videosAppServico;
+            this.usuario = usuario;
         }
 
         [HttpPost]
@@ -54,7 +57,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Videos
         [HttpGet("favoritos")]
         public ActionResult<IList<VideoResponse>> RecuperarFavoritos()
         {
-            string id = HttpContext.User.FindFirst("idUsuario").Value;
+            string id = usuario.UsuarioLogado(User);
             var result = videosAppServico.Favoritos(id);
             return Ok(result);
         }
