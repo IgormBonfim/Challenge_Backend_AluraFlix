@@ -24,7 +24,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Favoritos
             this.usuario = usuario;
         }
 
-        [HttpPost]
+        [HttpPost("adicionar")]
         public ActionResult<VideoResponse> AdicionarFavorito([FromBody] FavoritoInserirRequest favoritoInserirRequest)
         {
             favoritoInserirRequest.IdUsuario = usuario.UsuarioLogado(User); 
@@ -33,7 +33,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Favoritos
             return Ok(retorno);
         }
 
-        [HttpPost]
+        [HttpPost("remover")]
         public ActionResult<VideoResponse> RemoverFavorito([FromBody] FavoritoRemoverRequest favoritoRemoverRequest)
         {
             favoritoRemoverRequest.IdUsuario = usuario.UsuarioLogado(User);

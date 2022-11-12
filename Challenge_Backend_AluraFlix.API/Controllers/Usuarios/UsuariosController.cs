@@ -73,7 +73,7 @@ namespace Challenge_Backend_AluraFlix.API.Controllers.Usuarios
         }
 
         [Authorize]
-        [HttpGet("{logado}")]
+        [HttpGet("logado")]
         public ActionResult<UsuarioResponse> Recuperar()
         {
             string id = HttpContext.User.FindFirst("idUsuario").Value;
