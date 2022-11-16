@@ -5,6 +5,7 @@ using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses;
 using Challenge_Backend_AluraFlix.Dominio.Usuarios.Entidades;
 using Challenge_Backend_AluraFlix.Dominio.Usuarios.Servicos.Interfaces;
+using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,43 +19,73 @@ namespace Challenge_Backend_AluraFlix.Aplicacao.Usuarios.Servicos
         private readonly IIdentityServico identityServico;
         private readonly IUsuariosServico usuariosServico;
         private readonly IEmailServico emailServico;
+        private readonly ISession session;
         private readonly IMapper mapper;
 
-        public UsuariosAppServico(IIdentityServico identityServico, IUsuariosServico usuariosServico, IEmailServico emailServico, IMapper mapper)
+        public UsuariosAppServico(IIdentityServico identityServico, IUsuariosServico usuariosServico, IEmailServico emailServico, ISession session, IMapper mapper)
         {
             this.identityServico = identityServico;
             this.usuariosServico = usuariosServico;
             this.emailServico = emailServico;
+            this.session = session;
             this.mapper = mapper;
         }
         public UsuarioAtivarResponse Ativar(UsuarioAtivarRequest ativarRequest)
         {
-            return identityServico.Ativar(ativarRequest).Result;
+            ITransaction transacao = session.BeginTransaction();
+
+            try
+            {
+                UsuarioAtivarResponse usuarioAtivar = identityServico.Ativar(ativarRequest).Result;
+                if (transacao.IsActive)
+                    transacao.Commit();
+
+                return usuarioAtivar;
+            }
+            catch
+            {
+                if (transacao.IsActive)
+                    transacao.Rollback();
+                throw;
+            }
         }
 
         public UsuarioCadastroResponse Cadastrar(UsuarioCadastroRequest cadastroRequest)
         {
-            UsuarioCadastroResponse usuarioCadastroResponse = identityServico.CadastrarUsuario(cadastroRequest).Result;
-            if (usuarioCadastroResponse.Sucesso)
+            ITransaction transacao = session.BeginTransaction();
+
+            try
             {
-                try
+                UsuarioCadastroResponse usuarioCadastroResponse = identityServico.CadastrarUsuario(cadastroRequest).Result;
+                if (usuarioCadastroResponse.Sucesso)
                 {
-                    var mensagem = emailServico.CriarMensagem(new[] { cadastroRequest.Email }, "Ative sua conta - AluraFlix", usuarioCadastroResponse.IdUsuario, usuarioCadastroResponse.TokenEmail);
-                    var corpoEmail = emailServico.CriaCorpoEmail(mensagem);
-                    emailServico.EnviarEmail(corpoEmail);
-                }
-                catch
-                {
-                    var ativarEmail = new UsuarioAtivarRequest()
+                    try
                     {
-                        IdUsuario = usuarioCadastroResponse.IdUsuario,
-                        TokenAtivacao = usuarioCadastroResponse.TokenEmail,
-                    };
-                    identityServico.Ativar(ativarEmail);
+                        var mensagem = emailServico.CriarMensagem(new[] { cadastroRequest.Email }, "Ative sua conta - AluraFlix", usuarioCadastroResponse.IdUsuario, usuarioCadastroResponse.TokenEmail);
+                        var corpoEmail = emailServico.CriaCorpoEmail(mensagem);
+                        emailServico.EnviarEmail(corpoEmail);
+                    }
+                    catch
+                    {
+                        var ativarEmail = new UsuarioAtivarRequest()
+                        {
+                            IdUsuario = usuarioCadastroResponse.IdUsuario,
+                            TokenAtivacao = usuarioCadastroResponse.TokenEmail,
+                        };
+                        identityServico.Ativar(ativarEmail);
+                    }
                 }
+
+                if (transacao.IsActive)
+                    transacao.Commit();
+                return usuarioCadastroResponse;
+            }
+            catch
+            {   if(transacao.IsActive)
+                    transacao.Rollback();
+                throw;
             }
 
-            return usuarioCadastroResponse;
         }
 
         public UsuarioLoginResponse Login(UsuarioLoginRequest loginRequest)

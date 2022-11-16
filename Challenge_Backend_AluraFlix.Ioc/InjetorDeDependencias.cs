@@ -19,7 +19,6 @@ using Challenge_Backend_AluraFlix.Infra.Videos;
 using Challenge_Backend_AluraFlix.Infra.Videos.Mapeamentos;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NHibernate;
 using ISession = NHibernate.ISession;
@@ -38,6 +37,11 @@ using Challenge_Backend_AluraFlix.Dominio.Favoritos.Servicos;
 using Challenge_Backend_AluraFlix.Dominio.Favoritos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Genericos.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.Aplicacao.Genericos.Servicos;
+using FluentNHibernate.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
+using Challenge_Backend_AluraFlix.Autenticacao.Entidades;
+using Challenge_Backend_AluraFlix.Autenticacao.Mapeamentos;
+using FluentNHibernate.AspNetCore.Identity.Mappings;
 
 namespace Challenge_Backend_AluraFlix.Ioc
 {
@@ -50,26 +54,34 @@ namespace Challenge_Backend_AluraFlix.Ioc
             services.AddSingleton<ISessionFactory>(factory =>
             {
                 string connectionString = configuration.GetConnectionString("MySql");
-                return Fluently.Configure()
-                                    .Database(MySQLConfiguration.Standard
-                                        .ConnectionString(connectionString)
-                                        .FormatSql()
-                                        .ShowSql())
-                                    .Mappings(x => x.FluentMappings.AddFromAssemblyOf<VideosMap>())
+            return Fluently.Configure()
+                                .Database(MySQLConfiguration.Standard
+                                    .ConnectionString(connectionString)
+                                    .FormatSql()
+                                    .ShowSql())
+                                .Mappings(x => {
+                                    x.FluentMappings.AddFromAssemblyOf<VideosMap>();
+                                    x.FluentMappings.AddFromAssemblyOf<ApplicationUserMap>()
+                                    .Add<IdentityRoleClaimMap>()
+                                    .Add<IdentityUserLoginMap>();
+                                    })
                                     .BuildSessionFactory();
             });
 
-            services.AddDbContext<IdentityDataContext>(options =>
-                    options.UseMySql(
-                    configuration.GetConnectionString("MySql"),
-                    ServerVersion.Parse("8.0.28")
-                )
-            );
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDataContext>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .ExtendConfiguration()
+                .AddRoles<ApplicationRole>()
+                .AddUserRole<ApplicationUserRole>()
+                .AddNHibernateStores(t => t.SetSessionAutoFlush(false))
                 .AddDefaultTokenProviders();
+
+            //services.AddIdentityCore<ApplicationUser>()
+            //    .ExtendConfiguration()
+            //    .AddRoles<ApplicationRole>()
+            //    .AddUserRole<ApplicationUserRole>()
+            //    .AddNHibernateStores(t => t.SetSessionAutoFlush(false))
+            //    .AddDefaultTokenProviders();
+
 
             services.AddAutoMapper(typeof(VideosProfile));
 
@@ -92,7 +104,7 @@ namespace Challenge_Backend_AluraFlix.Ioc
             services.AddScoped<ISmtpClient, SmtpClient>();
             services.AddScoped<IIdentityServico, IdentityServico>();
 
-            services.AddScoped<ISession>(factory => factory.GetService<ISessionFactory>()?.OpenSession());
+            services.AddScoped<ISession>(factory => factory.GetService<ISessionFactory>()!.OpenSession());
 
         }
     }

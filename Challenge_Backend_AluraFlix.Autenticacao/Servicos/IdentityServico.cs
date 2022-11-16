@@ -1,4 +1,5 @@
 ﻿using Challenge_Backend_AluraFlix.Autenticacao.Configuracoes;
+using Challenge_Backend_AluraFlix.Autenticacao.Entidades;
 using Challenge_Backend_AluraFlix.Autenticacao.Servicos.Interfaces;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Requests;
 using Challenge_Backend_AluraFlix.DataTransfer.Usuarios.Responses;
@@ -12,11 +13,11 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 {
     public class IdentityServico : IIdentityServico
     {
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtOptions jwtOptions;
 
-        public IdentityServico(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<JwtOptions> jwtOptions)
+        public IdentityServico(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IOptions<JwtOptions> jwtOptions)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
@@ -25,12 +26,12 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 
         public async Task<UsuarioAtivarResponse> Ativar(UsuarioAtivarRequest usuarioAtivarRequest)
         {
-            var identityUser = userManager.Users.FirstOrDefault(u => u.Id == usuarioAtivarRequest.IdUsuario);
+            var ApplicationUser = userManager.Users.FirstOrDefault(u => u.Id == usuarioAtivarRequest.IdUsuario);
 
-            if (identityUser == null)
+            if (ApplicationUser == null)
                 throw new Exception("Usuario não encontrado");
 
-            var identityResult = await userManager.ConfirmEmailAsync(identityUser, usuarioAtivarRequest.TokenAtivacao);
+            var identityResult = await userManager.ConfirmEmailAsync(ApplicationUser, usuarioAtivarRequest.TokenAtivacao);
 
             var usuarioAtivarResponse = new UsuarioAtivarResponse(identityResult.Succeeded);
 
@@ -42,23 +43,23 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 
         public async Task<UsuarioCadastroResponse> CadastrarUsuario(UsuarioCadastroRequest usuarioCadastro)
         {
-            var identityUser = new IdentityUser
+            var ApplicationUser = new ApplicationUser
             {
                 UserName = usuarioCadastro.Email,
                 Email = usuarioCadastro.Email,
             };
 
-            var result = await userManager.CreateAsync(identityUser, usuarioCadastro.Senha);
+            var result = await userManager.CreateAsync(ApplicationUser, usuarioCadastro.Senha);
 
             UsuarioCadastroResponse usuarioCadastroResponse = new UsuarioCadastroResponse(result.Succeeded);
 
             if (result.Succeeded)
             {
-                usuarioCadastroResponse.IdUsuario = RecuperarUsuarioPorEmail(identityUser.Email).Id;
+                usuarioCadastroResponse.IdUsuario = ApplicationUser.Id;
 
-                var tokenAtivacao = userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
+                var tokenAtivacao = userManager.GenerateEmailConfirmationTokenAsync(ApplicationUser).Result;
                 usuarioCadastroResponse.TokenEmail = HttpUtility.UrlEncode(tokenAtivacao);
-                await userManager.SetLockoutEnabledAsync(identityUser, false);
+                await userManager.SetLockoutEnabledAsync(ApplicationUser, false);
             }
 
             if (!result.Succeeded && result.Errors.Count() > 0)
@@ -99,13 +100,13 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 
         public async Task<UsuarioAlterarSenhaResponse> RecuperarSenha(UsuarioAlterarSenhaRequest usuarioAlterarSenhaRequest)
         {
-            IdentityUser? identityUser = RecuperarUsuarioPorEmail(usuarioAlterarSenhaRequest.Email);
+            ApplicationUser? ApplicationUser = RecuperarUsuarioPorEmail(usuarioAlterarSenhaRequest.Email);
 
-            UsuarioAlterarSenhaResponse usuarioAlterarSenhaResponse = new UsuarioAlterarSenhaResponse(identityUser != null);
+            UsuarioAlterarSenhaResponse usuarioAlterarSenhaResponse = new UsuarioAlterarSenhaResponse(ApplicationUser != null);
 
-            if (identityUser != null)
+            if (ApplicationUser != null)
             {
-                string codigo = await userManager.GeneratePasswordResetTokenAsync(identityUser);
+                string codigo = await userManager.GeneratePasswordResetTokenAsync(ApplicationUser);
                 usuarioAlterarSenhaResponse.TokenAlteracao = codigo;
             }
 
@@ -139,16 +140,16 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 
         public async Task<UsuarioRedefinirResponse> RedefinirSenha(UsuarioRedefinirRequest usuarioRedefinirRequest)
         {
-            IdentityUser identityUser = RecuperarUsuarioPorEmail(usuarioRedefinirRequest.Email);
+            ApplicationUser ApplicationUser = RecuperarUsuarioPorEmail(usuarioRedefinirRequest.Email);
 
-            if (identityUser == null)
+            if (ApplicationUser == null)
             {
                 UsuarioRedefinirResponse usuarioResponse = new UsuarioRedefinirResponse(false);
                 usuarioResponse.AdicionarErro("Este Email não está cadastrado");
                 return usuarioResponse;
             }
 
-            var result = await userManager.ResetPasswordAsync(identityUser, usuarioRedefinirRequest.TokenSenha, usuarioRedefinirRequest.Senha);
+            var result = await userManager.ResetPasswordAsync(ApplicationUser, usuarioRedefinirRequest.TokenSenha, usuarioRedefinirRequest.Senha);
 
             UsuarioRedefinirResponse usuarioRedefinirResponse = new UsuarioRedefinirResponse(result.Succeeded);
 
@@ -160,12 +161,13 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
             return usuarioRedefinirResponse;
         }
 
-        private IdentityUser RecuperarUsuarioPorEmail(string email)
+        private ApplicationUser RecuperarUsuarioPorEmail(string email)
         {
-            return userManager.Users.FirstOrDefault(u => u.NormalizedEmail == email.ToUpper());
+            ApplicationUser? usuario = userManager.Users.FirstOrDefault(u => u.NormalizedEmail == email.ToUpper());
+            return usuario;
         }
 
-        private async Task<IList<Claim>> ObterClaims(IdentityUser user)
+        private async Task<IList<Claim>> ObterClaims(ApplicationUser user)
         {
             var claims = await userManager.GetClaimsAsync(user);
             var roles = await userManager.GetRolesAsync(user);
