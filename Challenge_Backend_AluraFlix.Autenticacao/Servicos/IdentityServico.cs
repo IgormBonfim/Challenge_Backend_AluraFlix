@@ -70,7 +70,9 @@ namespace Challenge_Backend_AluraFlix.Autenticacao.Servicos
 
         public async Task<UsuarioLoginResponse> Login(UsuarioLoginRequest usuarioLoginRequest)
         {
-            var result = await signInManager.PasswordSignInAsync(usuarioLoginRequest.Email, usuarioLoginRequest.Senha, false, true);
+            var usuario = RecuperarUsuarioPorEmail(usuarioLoginRequest.Email);
+
+            var result = await signInManager.PasswordSignInAsync(usuario, usuarioLoginRequest.Senha, false, true);
             if (result.Succeeded)
                 return await GerarToken(usuarioLoginRequest.Email);
 
